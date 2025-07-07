@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100..900&display=swap');
+
+:root {
+  --background: #f9fafb; /* Light background */
+  --foreground: #1f2937; /* Dark text */
+  --border: #9d5b07;
+  --font-display: 'Roboto Condensed', 'sans-serif';
+  --font-thin: 100;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-bold: 700;
+}
+
+@theme {
+  --font-primary: 'Roboto Condensed', sans-serif;
+  --font-secondary: 'Roboto', sans-serif;
+}
+
+/* @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-primary: var(--font-primary);
+} */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-primary);
+  letter-spacing: -0.5px;
+  font-weight: var(--font-regular);
+}
+
+h1,
+h2 {
+  font-family: var(--font-primary); /* Use Roboto Condensed */
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-7 md:px-6 lg:px-8;
+}
+
+.font-thin {
+  font-weight: 100 !important;
+}
+.font-light {
+  font-weight: 300 !important;
+}
+.font-normal {
+  font-weight: 400 !important;
+}
+.font-bold {
+  font-weight: 700 !important;
+}
+
+@keyframes zoomSlow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-zoomSlow {
+  animation: zoomSlow 6s ease-in-out infinite alternate;
+}
+
+.pattern {
+  background-color: #f3f4f6;
+  background-image: url("data:image/svg+xml,%3Csvg width='44' height='12' viewBox='0 0 44 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 12v-2L0 0v10l4 2h16zm18 0l4-2V0L22 10v2h16zM20 0v8L4 0h16zm18 0L22 8V0h16z' fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
