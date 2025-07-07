@@ -7,7 +7,7 @@ import WeddingBanner from '@/components/WeddingBanner';
 import WeddingGallerySlider from '@/components/WeddingGallerySlider';
 import WeddingSection from '@/components/WeddingSection';
 import Head from 'next/head';
-import { baseUrl } from '../utils/network';
+import { baseUrl } from '@/utils/network';
 
 export default function WeddingEvents() {
   const [seoData, setSeoData] = useState({
