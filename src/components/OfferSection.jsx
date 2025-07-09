@@ -300,7 +300,7 @@ export default function OfferSection({
                         alt={item.imageAlt}
                         width={1000}
                         height={600}
-                        className='border-8 shadow-xl w-full h-[480px] object-cover'
+                        className='border-8 shadow-xl w-full h-[240px] md:h-[480px] object-cover'
                         priority={index === 0}
                       />
                     )}

@@ -137,7 +137,7 @@ export default function EventsDiningSection({ sections }) {
                   alt={section.image_alt_text || section.title}
                   width={1000}
                   height={600}
-                  className='shadow-lg lg:h-[480px] object-cover'
+                  className='shadow-lg h-[240px] md:h-[480px] object-cover'
                   priority={index === 0} // Prioritize first image for LCP
                 />
               </div>
