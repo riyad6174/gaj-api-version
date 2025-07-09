@@ -38,6 +38,7 @@ export async function getStaticProps() {
         corporateData: result.data.map((item) => ({
           id: item.id,
           title: item.title,
+          subTitle: item.sub_title,
           description: item.description,
           images: item.images.map((img) => img.image_path) || [
             item.image_path || '/assets/event/placeholder.jpg',
@@ -127,6 +128,7 @@ export default function CorporateEventSection({
               result.data.map((item) => ({
                 id: item.id,
                 title: item.title,
+                subTitle: item.sub_title,
                 description: item.description,
                 images: item.images.map((img) => img.image_path) || [
                   item.image_path || '/assets/event/placeholder.jpg',
@@ -358,6 +360,10 @@ export default function CorporateEventSection({
                     <h3 className='text-2xl font-semibold text-gray-900'>
                       {item.title}
                     </h3>
+                    <span className='font-normal text-gray-600 text-sm'>
+                      {item.subTitle}
+                    </span>
+
                     <div
                       className='mt-4 text-gray-600 text-justify break-words'
                       dangerouslySetInnerHTML={{ __html: item.description }}

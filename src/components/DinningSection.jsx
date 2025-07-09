@@ -234,11 +234,12 @@ export default function DinningSection({
               ? subTitles[0]
               : 'Dine among sprawling hills and verdant nature at Koti Resort Shimla, a member of Radisson Individuals Retreats'}
           </h2>
-          <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[0]
-              ? stripHtml(descriptions[0])
-              : 'Experience a harmonious blend of vibrant flavors and serene mountain views at Koti Resort Shimla, a member of Radisson Individuals Retreats. For a quiet family meal, a romantic dinner, or a fun gathering with friends, The Barn restaurant offers a vibrant dining experience showcasing local cuisine and popular dishes from around the country.'}
-          </p>
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[0] ? descriptions[0] : '',
+            }}
+          />
           {subTitles && subTitles[1] && descriptions && descriptions[1] ? (
             <>
               <p className='mt-4 text-gray-600'>{stripHtml(descriptions[1])}</p>
@@ -250,12 +251,12 @@ export default function DinningSection({
             </>
           ) : (
             <>
-              <p className='mt-4 text-gray-600'>
+              {/* <p className='mt-4 text-gray-600'>
                 Offering a comfortable, English-inspired setting and a
                 refreshing selection of drinks, The Big Dipper Bar is perfect
                 for cozying up by the fire and unwinding after a long day of
                 work or sightseeing.
-              </p>
+              </p> */}
               <div className='mt-2 flex justify-center items-center'>
                 <span className='h-[2px] w-16 bg-gray-400'></span>
                 <span className='mx-2 text-gray-500 text-lg'>✿</span>

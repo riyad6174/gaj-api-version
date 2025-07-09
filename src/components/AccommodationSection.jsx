@@ -216,11 +216,12 @@ export default function AccommodationSection({
               ? subTitles[0]
               : 'Luxury Accommodations in Himachal Pradesh'}
           </h2>
-          <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[0]
-              ? stripHtml(descriptions[0])
-              : 'Set in picturesque storybook landscapes, Koti Resorts is a hill-top property, modelled after the traditional chalet-style hotels of the Swiss Alps. Enjoy the beautifully kept lawns, scenic views, a range of recreational activities, and the historic charm of a colonial town complete with all the finer comforts you could desire. The elegant interiors and the home-like, family-friendly ambience, makes Koti the perfect cold-weather hideaway for visitors travelling from near and far. Ideal for those looking to break away from the crowds and explore the quieter landscapes and off-beaten parts around Shimla.'}
-          </p>
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[0] ? descriptions[0] : '',
+            }}
+          />
           <div className='mt-2 flex justify-center items-center'>
             <span className='h-[2px] w-16 bg-gray-400'></span>
             <span className='mx-2 text-gray-500 text-lg'>✿</span>
@@ -231,11 +232,12 @@ export default function AccommodationSection({
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
             {subTitles && subTitles[1] ? subTitles[1] : 'Rooms'}
           </h2>
-          <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[1]
-              ? stripHtml(descriptions[1])
-              : 'As one of the oldest hotels in Mashobra, Koti Resorts has all the charm, atmosphere and service befitting its stature. We have a total of fifty elegantly furnished rooms in 4 categories, designed to cater to families of all sizes.'}
-          </p>
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[1] ? descriptions[1] : '',
+            }}
+          />
           {/* <p className='mt-4 text-gray-600'>
             {descriptions && descriptions[1]
               ? stripHtml(descriptions[1])
