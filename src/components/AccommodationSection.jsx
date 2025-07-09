@@ -344,7 +344,7 @@ export default function AccommodationSection({
                       {room.title}
                     </h2>
                     <span
-                      className='font-normal text-gray-600 text-sm'
+                      className='font-normal text-gray-600 text-sm bg-transparent'
                       dangerouslySetInnerHTML={{ __html: room.subtitle }}
                     />
                     {room.price && (

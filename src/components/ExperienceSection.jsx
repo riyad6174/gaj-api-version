@@ -239,23 +239,40 @@ export default function ExperienceSection({
     <section className='py-16 bg-white'>
       <div className='container mx-auto px-6 md:px-12 lg:px-20'>
         {/* Section Heading */}
-        {/* <div className='text-center'>
+        <div className='text-center '>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
             {subTitles && subTitles[0]
               ? subTitles[0]
-              : 'Explore Koti Resorts Experiences'}
+              : 'Luxury Accommodations in Himachal Pradesh'}
           </h2>
-          {descriptions && descriptions[0] && (
-            <>
-              <p className='mt-4 text-gray-600'>{stripHtml(descriptions[0])}</p>
-              <div className='mt-2 flex justify-center items-center'>
-                <span className='h-[2px] w-16 bg-gray-400'></span>
-                <span className='mx-2 text-gray-500 text-lg'>✿</span>
-                <span className='h-[2px] w-16 bg-gray-400'></span>
-              </div>
-            </>
-          )}
-        </div> */}
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[0] ? descriptions[0] : '',
+            }}
+          />
+          <div className='mt-2 flex justify-center items-center'>
+            <span className='h-[2px] w-16 bg-gray-400'></span>
+            <span className='mx-2 text-gray-500 text-lg'>✿</span>
+            <span className='h-[2px] w-16 bg-gray-400'></span>
+          </div>
+        </div>
+        <div className='text-center mt-4'>
+          <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
+            {subTitles && subTitles[1] ? subTitles[1] : 'Rooms'}
+          </h2>
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[1] ? descriptions[1] : '',
+            }}
+          />
+          {/* <p className='mt-4 text-gray-600'>
+            {descriptions && descriptions[1]
+              ? stripHtml(descriptions[1])
+              : 'All our rooms are coordinated in a way to make sure that you leave the noise at the door, retreating to the sanctuary that is the room. These sunlit havens come with independent balconies, and after a long day, you can draw the curtains, withdraw for a beat from the busyness of the world, and enjoy your cup of tea.'}
+          </p> */}
+        </div>
 
         {/* Grouped Explore Data */}
         {isDataLoading ? (
@@ -270,7 +287,7 @@ export default function ExperienceSection({
           Object.keys(exploreData).map((group, groupIndex) => (
             <div key={groupIndex}>
               {/* Group Heading */}
-              <div className='text-center mt-20'>
+              {/* <div className='text-center mt-20'>
                 <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
                   {group}
                 </h2>
@@ -279,7 +296,7 @@ export default function ExperienceSection({
                   <span className='mx-2 text-gray-500 text-lg'>✿</span>
                   <span className='h-[2px] w-16 bg-gray-400'></span>
                 </div>
-              </div>
+              </div> */}
 
               {/* Group Items */}
               {exploreData[group].map((item, index) => (
