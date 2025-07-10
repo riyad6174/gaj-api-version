@@ -15,7 +15,7 @@ export default function DinningBanner({ title, bannerImage }) {
           quality={90}
           priority
         />
-        <div className='absolute inset-0 bg-opacity-40'></div>
+        <div className='absolute inset-0 bg-black/20  bg-opacity-30'></div>
       </div>
 
       {/* Title Text */}

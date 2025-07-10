@@ -19,9 +19,9 @@ export default function AboutSection() {
             </p>
             <p className='mt-4 text-gray-700 '>
               The promoters have vast experience of over 25 years, in the
-              Hospitality industry and have been successfully running Koti
-              Resort in Himachal Pradesh. They have been pioneers in promoting
-              ‘Destination Tourism’. After the success of Koti Resort, the
+              Hospitality industry and have been successfully running gaj Resort
+              in Himachal Pradesh. They have been pioneers in promoting
+              ‘Destination Tourism’. After the success of Gaj Retreat, the
               promoters started an Adventure Tours outfit, which specialized in
               customized off- road tours in the remote Lahaul-Spiti and Ladakh
               regions wherein they conducted several successful expeditions.

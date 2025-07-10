@@ -12,7 +12,7 @@ function Accommodation() {
   const [seoData, setSeoData] = useState({
     // meta_title: 'Luxury Stay in Himachal Pradesh',
     // meta_description:
-    //   'Enjoy a luxury stay at Koti Resorts, Shimla, Himachal Pradesh. Relax in comfortable rooms with stunning views, perfect for getaways.',
+    //   'Enjoy a luxury stay at Gaj Retreats, Shimla, Himachal Pradesh. Relax in comfortable rooms with stunning views, perfect for getaways.',
     // image: '',
     // title: 'Accommodations',
     // sub_titles: ['title1', 'title2'],
@@ -32,7 +32,7 @@ function Accommodation() {
               result.data.meta_title || 'Luxury Stay in Himachal Pradesh',
             meta_description:
               result.data.meta_description ||
-              'Enjoy a luxury stay at Koti Resorts, Shimla, Himachal Pradesh. Relax in comfortable rooms with stunning views, perfect for getaways.',
+              'Enjoy a luxury stay at Gaj Retreats, Shimla, Himachal Pradesh. Relax in comfortable rooms with stunning views, perfect for getaways.',
             image: result.data.image_path,
             title: result.data.title || 'Accommodations',
             sub_titles: result.data.sub_title || ['title1', 'title2'],
@@ -60,7 +60,7 @@ function Accommodation() {
         <meta charSet='UTF-8' />
         <meta
           name='keywords'
-          content='luxury stay Shimla, Koti Resorts, Himachal Pradesh accommodations, comfortable rooms, mountain getaways'
+          content='luxury stay Shimla, Gaj Retreats, Himachal Pradesh accommodations, comfortable rooms, mountain getaways'
         />
 
         {/* Open Graph Tags */}
@@ -69,10 +69,10 @@ function Accommodation() {
         <meta property='og:image' content={seoData.image} />
         <meta
           property='og:url'
-          content='https://www.kotiresorts.com/accommodations'
+          content='https://gajretreat.com/accommodations'
         />
         <meta property='og:type' content='website' />
-        <meta property='og:site_name' content='Koti Resorts' />
+        <meta property='og:site_name' content='Gaj Retreats' />
 
         {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image' />

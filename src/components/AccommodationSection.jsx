@@ -74,6 +74,7 @@ export default function AccommodationSection({
     phone: '',
     message: '',
   });
+  const [currentRoomTitle, setCurrentRoomTitle] = useState(''); // Track the room title for section
 
   // Fallback state for client-side fetching (optional, for dynamic updates)
   const [data, setData] = useState(rooms || []);
@@ -126,9 +127,11 @@ export default function AccommodationSection({
       message: '',
       submissionTime: '',
     });
+    setCurrentRoomTitle('');
   };
 
-  const openDrawer = () => {
+  const openDrawer = (roomTitle) => {
+    setCurrentRoomTitle(roomTitle);
     setIsOpen(true);
   };
 
@@ -170,24 +173,42 @@ export default function AccommodationSection({
     formData.submissionTime = new Date().toLocaleString();
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ...formData, sheetName: 'Accommodation' }), // Specify the sheet name
+        body: JSON.stringify({ ...formData, sheetName: 'Accommodation' }),
       });
+
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Accommodation');
+      formDataPayload.append('section', currentRoomTitle || 'General Enquiry');
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
 
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
@@ -236,11 +257,6 @@ export default function AccommodationSection({
               __html: descriptions && descriptions[1] ? descriptions[1] : '',
             }}
           />
-          {/* <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[1]
-              ? stripHtml(descriptions[1])
-              : 'All our rooms are coordinated in a way to make sure that you leave the noise at the door, retreating to the sanctuary that is the room. These sunlit havens come with independent balconies, and after a long day, you can draw the curtains, withdraw for a beat from the busyness of the world, and enjoy your cup of tea.'}
-          </p> */}
         </div>
         <div className='bg-slate-50 p-4 md:p-10 mt-14'>
           <div className='text-center pb-8'>
@@ -356,9 +372,9 @@ export default function AccommodationSection({
                     />
                     <div className='mt-10 flex space-x-4'>
                       {/* Primary Button */}
-                      {room.is_enquire === 0 ? (
+                      {room.is_enquire === 0 || room.is_enquire === '0' ? (
                         <button
-                          onClick={openDrawer}
+                          onClick={() => openDrawer(room.title)}
                           className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                         >
                           {room.btn_text || 'Enquire Now'}
@@ -375,7 +391,7 @@ export default function AccommodationSection({
                       {room.has_btn2 === 1 &&
                         (room.is_enquire2 === 0 ? (
                           <button
-                            onClick={openDrawer}
+                            onClick={() => openDrawer(room.title)}
                             className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                           >
                             {room.btn2_text || 'Enquire Now'}
@@ -437,11 +453,11 @@ export default function AccommodationSection({
                   <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                     <img
                       src='/assets/img/logo.png'
-                      alt='koti logo'
+                      alt='gaj logo'
                       className='w-44 mx-auto'
                     />
                     <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                      Thank you for your interest in Koti Resorts. Please kindly
+                      Thank you for your interest in Gaj Retreats. Please kindly
                       provide us with details of your request using the form
                       below.
                     </p>

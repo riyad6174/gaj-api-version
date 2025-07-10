@@ -14,7 +14,7 @@ export default function HowToReach() {
 
         {/* Description */}
         {/* <p className='mt-4 text-gray-600 max-w-3xl'>
-          Nestled in the serene hills of Himachal Pradesh, Koti Resort is easily
+          Nestled in the serene hills of Himachal Pradesh, Gaj Retreat is easily
           accessible by road and offers a peaceful escape from the city hustle.
         </p> */}
 

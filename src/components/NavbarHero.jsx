@@ -67,7 +67,7 @@ export default function NavbarHero() {
               <div className='flex items-center justify-center w-40 h-18 md:w-30 md:h-15 overflow-hidden'>
                 <Image
                   src='/assets/img/footer.png'
-                  alt='Koti Resorts'
+                  alt='Gaj Retreats'
                   width={1200}
                   height={1000}
                   className='cursor-pointer'
@@ -91,7 +91,7 @@ export default function NavbarHero() {
                   <div className='w-44 h-20 overflow-hidden'>
                     <Image
                       src='/assets/img/footer.png'
-                      alt='Koti Resorts'
+                      alt='Gaj Retreats'
                       width={1200}
                       height={1000}
                       className='object-contain cursor-pointer'
@@ -177,7 +177,7 @@ export default function NavbarHero() {
                         <div className='flex items-center justify-center w-46 h-20 md:w-30 md:h-15 lg:w-44 lg:h-20 overflow-hidden'>
                           <Image
                             src='/assets/img/logo.png'
-                            alt='Koti Resorts'
+                            alt='Gaj Retreats'
                             width={1000}
                             height={1000}
                             className='cursor-pointer'

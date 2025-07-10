@@ -73,7 +73,7 @@ export default function SignatureItineraries() {
         <meta property='og:image' content='/assets/img/slider.jpg' />
         <meta
           property='og:url'
-          content='https://www.kotiresorts.com/signature-itineraries'
+          content='https://gajretreat.com/signature-itineraries'
         />
         <meta property='og:type' content='website' />
         {/* Twitter Card Tags */}

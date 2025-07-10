@@ -12,7 +12,7 @@ export default function CorporateEvents() {
   const [seoData, setSeoData] = useState({
     // meta_title: 'Hotels for Corporate or Business Meetings & Events',
     // meta_description:
-    //   'Host successful corporate events at Koti Resorts in Shimla. Our resort offers excellent meeting facilities and beautiful surroundings, making it perfect for business meetings, conferences, and corporate events.',
+    //   'Host successful corporate events at Gaj Retreats in Shimla. Our resort offers excellent meeting facilities and beautiful surroundings, making it perfect for business meetings, conferences, and corporate events.',
     // image: '',
     // title: 'Meetings & Events',
     // sub_titles: ['title1', 'title2'],
@@ -73,7 +73,7 @@ export default function CorporateEvents() {
         <meta charSet='UTF-8' />
         <meta
           name='keywords'
-          content='corporate events Shimla, Koti Resort business meetings, Himachal Pradesh conference venues, corporate hotel Shimla, Radisson Individuals'
+          content='corporate events Shimla, Gaj Retreat business meetings, Himachal Pradesh conference venues, corporate hotel Shimla, Radisson Individuals'
         />
 
         {/* Open Graph Tags */}
@@ -82,10 +82,10 @@ export default function CorporateEvents() {
         <meta property='og:image' content={seoData.image} />
         <meta
           property='og:url'
-          content='https://www.kotiresorts.com/corporate-events'
+          content='https://gajretreat.com/corporate-events'
         />
         <meta property='og:type' content='website' />
-        <meta property='og:site_name' content='Koti Resorts' />
+        <meta property='og:site_name' content='Gaj Retreats' />
 
         {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image' />

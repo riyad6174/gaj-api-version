@@ -11,9 +11,9 @@ import { baseUrl } from '../utils/network';
 export default function Dinning() {
   const [seoData, setSeoData] = useState({
     // meta_title:
-    //   'Dining | Koti Resort Shimla, a member of Radisson Individuals Retreats',
+    //   'Dining | Gaj Retreat Shimla, a member of Radisson Individuals Retreats',
     // meta_description:
-    //   'Enjoy local cuisine, refreshing drinks, and stunning mountain views at our restaurant and bar at Koti Resort Shimla, a member of Radisson Individuals.',
+    //   'Enjoy local cuisine, refreshing drinks, and stunning mountain views at our restaurant and bar at Gaj Retreat Shimla, a member of Radisson Individuals.',
     // image: '',
     // title: 'Dining',
     // sub_titles: ['title1', 'title2'],
@@ -84,9 +84,9 @@ export default function Dinning() {
         <meta property='og:title' content={seoData.meta_title} />
         <meta property='og:description' content={seoData.meta_description} />
         <meta property='og:image' content={seoData.image} />
-        <meta property='og:url' content='https://www.kotiresorts.com/dining' />
+        <meta property='og:url' content='https://gajretreat.com/dining' />
         <meta property='og:type' content='website' />
-        <meta property='og:site_name' content='Koti Resorts' />
+        <meta property='og:site_name' content='Gaj Retreats' />
 
         {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image' />

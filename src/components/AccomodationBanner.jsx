@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function AccommodationBanner({ title, bannerImage }) {
   return (
     <section className='relative w-full h-[340px] md:h-[480px] flex items-center'>
-      <div className='absolute inset-0 bg-black/20 z-10'></div>
+      {/* <div className='absolute inset-0 bg-black/60 z-10'></div> */}
 
       {/* Background Image */}
       <div className='absolute inset-0'>
@@ -15,7 +15,7 @@ export default function AccommodationBanner({ title, bannerImage }) {
           quality={90}
           priority
         />
-        <div className='absolute inset-0 bg-opacity-40'></div>
+        <div className='absolute inset-0 bg-black/20  bg-opacity-30'></div>
       </div>
 
       {/* Title Text */}

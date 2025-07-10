@@ -11,9 +11,9 @@ import { baseUrl } from '../utils/network';
 export default function Explore() {
   const [seoData, setSeoData] = useState({
     // meta_title:
-    //   'Explore Koti Resorts Experiences | Swimming Pool, Forest Retreats & Radisson Shimla',
+    //   'Explore Gaj Retreats Experiences | Swimming Pool, Forest Retreats & Radisson Shimla',
     // meta_description:
-    //   'Experience luxury and serenity at Koti Resorts, a Radisson Retreat in Naldehra. Enjoy a swimming pool, forest resorts near Shimla, and exceptional hospitality.',
+    //   'Experience luxury and serenity at Gaj Retreats, a Radisson Retreat in Naldehra. Enjoy a swimming pool, forest resorts near Shimla, and exceptional hospitality.',
     // image: '',
     // title: 'Experiences',
     // sub_titles: ['title1', 'title2'],
@@ -84,9 +84,9 @@ export default function Explore() {
         <meta property='og:title' content={seoData.meta_title} />
         <meta property='og:description' content={seoData.meta_description} />
         <meta property='og:image' content={seoData.image} />
-        <meta property='og:url' content='https://www.kotiresorts.com/explore' />
+        <meta property='og:url' content='https://gajretreat.com/explore' />
         <meta property='og:type' content='website' />
-        <meta property='og:site_name' content='Koti Resorts' />
+        <meta property='og:site_name' content='Gaj Retreats' />
 
         {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image' />

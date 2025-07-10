@@ -13,13 +13,13 @@ export default function Footer() {
             <div className='w-60 h-32 md:w-72 md:h-32  overflow-hidden'>
               <Image
                 src='/assets/img/footer.png'
-                alt='Koti Logo'
+                alt='gaj Logo'
                 width={1000}
                 height={1000}
               />
             </div>
             {/* <h3 className='text-xl font-semibold text-yellow-600 mt-4 uppercase'>
-              Koti Resorts
+              Gaj Retreats
             </h3> */}
             {/* Social Icons */}
             <div className='flex justify-center md:justify-start space-x-4 mt-4'>
@@ -30,7 +30,7 @@ export default function Footer() {
                 <Instagram size={24} />
               </a>
               <a
-                href='https://www.facebook.com/gajretreat/'
+                href='https://www.facebook.com/gajresort/'
                 className='hover:text-yellow-500 transition'
               >
                 <Facebook size={24} />

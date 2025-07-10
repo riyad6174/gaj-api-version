@@ -22,7 +22,7 @@ const PhoneInput = dynamic(() => import('react-phone-input-2'), { ssr: false });
 export default function OfferSection({
   offerData: initialData,
   subTitles,
-  descriptions: descriptions = [],
+  descriptions = [],
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -42,13 +42,29 @@ export default function OfferSection({
   });
   const [offerData, setOfferData] = useState(initialData || []);
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [currentOfferTitle, setCurrentOfferTitle] = useState(''); // Track the offer item title for section
 
   // Client-side fallback for dynamic updates
   useEffect(() => {
     if (!initialData || initialData.length === 0) {
       setIsDataLoading(true);
       fetch(`${baseUrl}/frontend/data/page-data-list/offers`)
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(
+              `HTTP error! Status: ${res.status}, StatusText: ${res.statusText}`
+            );
+          }
+          const contentType = res.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            return res.text().then((text) => {
+              throw new Error(
+                `Expected JSON, but received: ${text.slice(0, 50)}...`
+              );
+            });
+          }
+          return res.json();
+        })
         .then((result) => {
           if (result.success && result.data) {
             const mappedData = result.data.map((item) => ({
@@ -73,7 +89,14 @@ export default function OfferSection({
             setOfferData(mappedData);
           }
         })
-        .catch((error) => console.error('Error fetching offer data:', error))
+        .catch((error) => {
+          console.error('Error fetching offer data:', error.message);
+          console.error(
+            'API URL:',
+            `${baseUrl}/frontend/data/page-data-list/offers`
+          );
+          console.error('Error details:', error);
+        })
         .finally(() => setIsDataLoading(false));
     }
   }, [initialData]);
@@ -89,9 +112,11 @@ export default function OfferSection({
       message: '',
       submissionTime: '',
     });
+    setCurrentOfferTitle('');
   };
 
-  const openDrawer = () => {
+  const openDrawer = (offerTitle) => {
+    setCurrentOfferTitle(offerTitle);
     setIsOpen(true);
   };
 
@@ -129,7 +154,8 @@ export default function OfferSection({
     formData.submissionTime = new Date().toLocaleString();
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -137,16 +163,33 @@ export default function OfferSection({
         body: JSON.stringify({ ...formData, sheetName: 'Offers' }),
       });
 
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Offers');
+      formDataPayload.append('section', currentOfferTitle || 'General Enquiry');
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
@@ -162,14 +205,14 @@ export default function OfferSection({
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
             {subTitles && subTitles[0] ? subTitles[0] : ''}
           </h2>
-          {/* <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[0]
-              ? stripHtml(descriptions[0])
-              : 'Experience a harmonious blend of vibrant flavors and serene mountain views at Koti Resort Shimla, a member of Radisson Individuals Retreats. For a quiet family meal, a romantic dinner, or a fun gathering with friends, The Barn restaurant offers a vibrant dining experience showcasing local cuisine and popular dishes from around the country.'}
-          </p> */}
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[0] ? descriptions[0] : '',
+            }}
+          />
           {subTitles && subTitles[1] && descriptions && descriptions[1] ? (
             <>
-              {/* <p className='mt-4 text-gray-600'>{stripHtml(descriptions[1])}</p> */}
               <div className='mt-2 flex justify-center items-center'>
                 <span className='h-[2px] w-16 bg-gray-400'></span>
                 <span className='mx-2 text-gray-500 text-lg'>✿</span>
@@ -178,12 +221,6 @@ export default function OfferSection({
             </>
           ) : (
             <>
-              {/* <p className='mt-4 text-gray-600'>
-                Offering a comfortable, English-inspired setting and a
-                refreshing selection of drinks, The Big Dipper Bar is perfect
-                for cozying up by the fire and unwinding after a long day of
-                work or sightseeing.
-              </p> */}
               <div className='mt-2 flex justify-center items-center'>
                 <span className='h-[2px] w-16 bg-gray-400'></span>
                 <span className='mx-2 text-gray-500 text-lg'>✿</span>
@@ -207,14 +244,14 @@ export default function OfferSection({
             <div
               key={item.id}
               className={`${
-                index % 2 === 1 ? 'pattern md:py-20 py-10' : ''
+                index % 2 === 1 ? '' : 'md:py-20 py-10'
               } mt-10 md:mt-20`}
             >
               <div className='container px-4 sm:px-6 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-20 items-center'>
                 {/* Text Content */}
                 <div
                   className={`col-span-5 md:col-span-2 ${
-                    index % 2 === 0 ? 'md:order-last' : 'md:order-first'
+                    index % 2 === 1 ? 'md:order-last' : 'md:order-first'
                   }`}
                 >
                   {item.sub_title && (
@@ -248,7 +285,7 @@ export default function OfferSection({
                   <div className='flex flex-row gap-4 mt-10'>
                     {item.is_enquire === 0 ? (
                       <button
-                        onClick={openDrawer}
+                        onClick={() => openDrawer(item.title)}
                         className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                       >
                         {item.btn_text}
@@ -264,7 +301,7 @@ export default function OfferSection({
                     {item.has_btn2 === 1 &&
                       (item.is_enquire2 === 0 ? (
                         <button
-                          onClick={openDrawer}
+                          onClick={() => openDrawer(item.title)}
                           className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                         >
                           {item.btn2_text}
@@ -282,7 +319,7 @@ export default function OfferSection({
                 {/* Image */}
                 <div
                   className={`relative col-span-5 md:col-span-3 ${
-                    index % 2 === 0 ? 'md:order-first' : 'md:order-last'
+                    index % 2 === 1 ? 'md:order-first' : 'md:order-last'
                   }`}
                 >
                   <div className='absolute -top-3 -left-3 w-[30%] h-[50%] border-t-[12px] border-l-[12px] border-yellow-800'></div>
@@ -330,11 +367,11 @@ export default function OfferSection({
                   <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                     <img
                       src='/assets/img/logo.png'
-                      alt='koti logo'
+                      alt='gaj logo'
                       className='w-44 mx-auto'
                     />
                     <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                      Thank you for your interest in Koti Resorts. Please kindly
+                      Thank you for your interest in Gaj Retreats. Please kindly
                       provide us with details of your request using the form
                       below.
                     </p>

@@ -100,6 +100,7 @@ export default function ExperienceSection({
   });
   const [exploreData, setExploreData] = useState(initialData || {});
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [currentExperienceTitle, setCurrentExperienceTitle] = useState(''); // Track the experience item title for section
 
   // Client-side fallback for dynamic updates
   useEffect(() => {
@@ -170,9 +171,11 @@ export default function ExperienceSection({
       message: '',
       submissionTime: '',
     });
+    setCurrentExperienceTitle('');
   };
 
-  const openDrawer = () => {
+  const openDrawer = (experienceTitle) => {
+    setCurrentExperienceTitle(experienceTitle);
     setIsOpen(true);
   };
 
@@ -210,7 +213,8 @@ export default function ExperienceSection({
     formData.submissionTime = new Date().toLocaleString();
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -218,16 +222,36 @@ export default function ExperienceSection({
         body: JSON.stringify({ ...formData, sheetName: 'Activities' }),
       });
 
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Activities');
+      formDataPayload.append(
+        'section',
+        currentExperienceTitle || 'General Enquiry'
+      );
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
@@ -239,7 +263,7 @@ export default function ExperienceSection({
     <section className='py-16 bg-white'>
       <div className='container mx-auto px-6 md:px-12 lg:px-20'>
         {/* Section Heading */}
-        <div className='text-center '>
+        <div className='text-center'>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
             {subTitles && subTitles[0] ? subTitles[0] : ''}
           </h2>
@@ -265,11 +289,6 @@ export default function ExperienceSection({
               __html: descriptions && descriptions[1] ? descriptions[1] : '',
             }}
           />
-          {/* <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[1]
-              ? stripHtml(descriptions[1])
-              : 'All our rooms are coordinated in a way to make sure that you leave the noise at the door, retreating to the sanctuary that is the room. These sunlit havens come with independent balconies, and after a long day, you can draw the curtains, withdraw for a beat from the busyness of the world, and enjoy your cup of tea.'}
-          </p> */}
         </div>
 
         {/* Grouped Explore Data */}
@@ -284,24 +303,12 @@ export default function ExperienceSection({
         ) : (
           Object.keys(exploreData).map((group, groupIndex) => (
             <div key={groupIndex}>
-              {/* Group Heading */}
-              {/* <div className='text-center mt-20'>
-                <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
-                  {group}
-                </h2>
-                <div className='mt-2 flex justify-center items-center'>
-                  <span className='h-[2px] w-16 bg-gray-400'></span>
-                  <span className='mx-2 text-gray-500 text-lg'>✿</span>
-                  <span className='h-[2px] w-16 bg-gray-400'></span>
-                </div>
-              </div> */}
-
               {/* Group Items */}
               {exploreData[group].map((item, index) => (
                 <div
                   key={item.id}
                   className={`${
-                    index % 2 === 1 ? ' md:py-20 py-10' : ''
+                    index % 2 === 1 ? 'md:py-20 py-10' : ''
                   } mt-10 md:mt-20`}
                 >
                   <div className='grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-20 items-center'>
@@ -322,7 +329,7 @@ export default function ExperienceSection({
                         {/* Primary Button */}
                         {item.is_enquire === 0 ? (
                           <button
-                            onClick={openDrawer}
+                            onClick={() => openDrawer(item.title)}
                             className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                           >
                             {item.btn_text || 'Enquire Now'}
@@ -339,7 +346,7 @@ export default function ExperienceSection({
                         {item.has_btn2 === 1 &&
                           (item.is_enquire2 === 0 ? (
                             <button
-                              onClick={openDrawer}
+                              onClick={() => openDrawer(item.title)}
                               className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                             >
                               {item.btn2_text || 'Enquire Now'}
@@ -407,11 +414,11 @@ export default function ExperienceSection({
                   <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                     <img
                       src='/assets/img/logo.png'
-                      alt='koti logo'
+                      alt='gaj logo'
                       className='w-44 mx-auto'
                     />
                     <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                      Thank you for your interest in Koti Resorts. Please kindly
+                      Thank you for your interest in Gaj Retreats. Please kindly
                       provide us with details of your request using the form
                       below.
                     </p>

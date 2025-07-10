@@ -10,9 +10,9 @@ import { baseUrl } from '../utils/network';
 
 function Dining() {
   const [seoData, setSeoData] = useState({
-    // meta_title: 'Get The Best Shimla Hotel Deals With Koti Resort',
+    // meta_title: 'Get The Best Shimla Hotel Deals With Gaj Retreat',
     // meta_description:
-    //   'Find a fantastic deal on your next hotel stay in Shimla, India with Koti Resorts. A member of Radisson Individuals Retreats.',
+    //   'Find a fantastic deal on your next hotel stay in Shimla, India with Gaj Retreats. A member of Radisson Individuals Retreats.',
     // image: '',
     // title: 'Offers',
     // sub_titles: ['title1', 'title2'],
@@ -30,10 +30,10 @@ function Dining() {
           setSeoData({
             meta_title:
               result.data.meta_title ||
-              'Get The Best Shimla Hotel Deals With Koti Resort',
+              'Get The Best Shimla Hotel Deals With Gaj Retreat',
             meta_description:
               result.data.meta_description ||
-              'Find a fantastic deal on your next hotel stay in Shimla, India with Koti Resorts. A member of Radisson Individuals Retreats.',
+              'Find a fantastic deal on your next hotel stay in Shimla, India with Gaj Retreats. A member of Radisson Individuals Retreats.',
             image: result.data.image_path,
             title: result.data.title || 'Offers',
             sub_titles: result.data.sub_title || ['title1', 'title2'],
@@ -61,16 +61,16 @@ function Dining() {
         <meta charSet='UTF-8' />
         <meta
           name='keywords'
-          content='Shimla hotel deals, Koti Resorts, Radisson Individuals, hotel offers Shimla'
+          content='Shimla hotel deals, Gaj Retreats, Radisson Individuals, hotel offers Shimla'
         />
 
         {/* Open Graph Tags */}
         <meta property='og:title' content={seoData.meta_title} />
         <meta property='og:description' content={seoData.meta_description} />
         <meta property='og:image' content={seoData.image} />
-        <meta property='og:url' content='https://www.kotiresorts.com/dining' />
+        <meta property='og:url' content='https://gajretreat.com/dining' />
         <meta property='og:type' content='website' />
-        <meta property='og:site_name' content='Koti Resorts' />
+        <meta property='og:site_name' content='Gaj Retreats' />
 
         {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image' />

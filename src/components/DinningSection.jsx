@@ -91,6 +91,7 @@ export default function DinningSection({
   });
   const [diningData, setDiningData] = useState(initialData || []);
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [currentDiningTitle, setCurrentDiningTitle] = useState(''); // Track the dining item title for section
 
   // Client-side fallback for dynamic updates
   useEffect(() => {
@@ -159,9 +160,11 @@ export default function DinningSection({
       message: '',
       submissionTime: '',
     });
+    setCurrentDiningTitle('');
   };
 
-  const openDrawer = () => {
+  const openDrawer = (diningTitle) => {
+    setCurrentDiningTitle(diningTitle);
     setIsOpen(true);
   };
 
@@ -199,7 +202,8 @@ export default function DinningSection({
     formData.submissionTime = new Date().toLocaleString();
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -207,16 +211,36 @@ export default function DinningSection({
         body: JSON.stringify({ ...formData, sheetName: 'Dining' }),
       });
 
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Dining');
+      formDataPayload.append(
+        'section',
+        currentDiningTitle || 'General Enquiry'
+      );
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
@@ -249,12 +273,6 @@ export default function DinningSection({
             </>
           ) : (
             <>
-              {/* <p className='mt-4 text-gray-600'>
-                Offering a comfortable, English-inspired setting and a
-                refreshing selection of drinks, The Big Dipper Bar is perfect
-                for cozying up by the fire and unwinding after a long day of
-                work or sightseeing.
-              </p> */}
               <div className='mt-2 flex justify-center items-center'>
                 <span className='h-[2px] w-16 bg-gray-400'></span>
                 <span className='mx-2 text-gray-500 text-lg'>✿</span>
@@ -404,7 +422,7 @@ export default function DinningSection({
                       {/* Primary Button */}
                       {item.is_enquire === 0 ? (
                         <button
-                          onClick={openDrawer}
+                          onClick={() => openDrawer(item.title)}
                           className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                         >
                           {item.btn_text || 'Enquire Now'}
@@ -421,7 +439,7 @@ export default function DinningSection({
                       {item.has_btn2 === 1 &&
                         (item.is_enquire2 === 0 ? (
                           <button
-                            onClick={openDrawer}
+                            onClick={() => openDrawer(item.title)}
                             className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                           >
                             {item.btn2_text || 'Enquire Now'}
@@ -463,11 +481,11 @@ export default function DinningSection({
                   <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                     <img
                       src='/assets/img/logo.png'
-                      alt='koti logo'
+                      alt='gaj logo'
                       className='w-44 mx-auto'
                     />
                     <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                      Thank you for your interest in Koti Resorts. Please kindly
+                      Thank you for your interest in Gaj Retreats. Please kindly
                       provide us with details of your request using the form
                       below.
                     </p>

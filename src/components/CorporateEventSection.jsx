@@ -99,6 +99,7 @@ export default function CorporateEventSection({
   });
   const [corporateData, setCorporateData] = useState(initialData || []);
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [currentEventTitle, setCurrentEventTitle] = useState(''); // Track the event item title for section
 
   // Client-side fallback for dynamic updates
   useEffect(() => {
@@ -168,9 +169,11 @@ export default function CorporateEventSection({
       message: '',
       submissionTime: '',
     });
+    setCurrentEventTitle('');
   };
 
-  const openDrawer = () => {
+  const openDrawer = (eventTitle) => {
+    setCurrentEventTitle(eventTitle);
     setIsOpen(true);
   };
 
@@ -208,7 +211,8 @@ export default function CorporateEventSection({
     formData.submissionTime = new Date().toLocaleString();
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -216,16 +220,33 @@ export default function CorporateEventSection({
         body: JSON.stringify({ ...formData, sheetName: 'Events' }),
       });
 
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Events');
+      formDataPayload.append('section', currentEventTitle || 'General Enquiry');
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
@@ -263,11 +284,6 @@ export default function CorporateEventSection({
               __html: descriptions && descriptions[1] ? descriptions[1] : '',
             }}
           />
-          {/* <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[1]
-              ? stripHtml(descriptions[1])
-              : 'All our rooms are coordinated in a way to make sure that you leave the noise at the door, retreating to the sanctuary that is the room. These sunlit havens come with independent balconies, and after a long day, you can draw the curtains, withdraw for a beat from the busyness of the world, and enjoy your cup of tea.'}
-          </p> */}
         </div>
         <div className='bg-slate-50 p-4 md:p-10 mt-14'>
           <div className='text-center'>
@@ -354,9 +370,9 @@ export default function CorporateEventSection({
               No corporate event options available.
             </div>
           ) : (
-            corporateData.map((item, index) => (
+            corporateData.map((event, index) => (
               <div
-                key={item.id}
+                key={event.id}
                 className={`${
                   index % 2 === 1 ? 'pattern md:py-20 py-10' : ''
                 } mt-10 md:mt-20`}
@@ -371,48 +387,47 @@ export default function CorporateEventSection({
                     }`}
                   >
                     <h3 className='text-2xl font-semibold text-gray-900'>
-                      {item.title}
+                      {event.title}
                     </h3>
                     <span className='font-normal text-gray-600 text-sm'>
-                      {item.subTitle}
+                      {event.subTitle}
                     </span>
-
                     <div
                       className='mt-4 text-gray-600 text-justify break-words'
-                      dangerouslySetInnerHTML={{ __html: item.description }}
+                      dangerouslySetInnerHTML={{ __html: event.description }}
                     />
                     <div className='mt-10 flex space-x-4'>
                       {/* Primary Button */}
-                      {item.is_enquire === 0 ? (
+                      {event.is_enquire === 0 ? (
                         <button
-                          onClick={openDrawer}
+                          onClick={() => openDrawer(event.title)}
                           className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                         >
-                          {item.btn_text || 'Enquire Now'}
+                          {event.btn_text || 'Enquire Now'}
                         </button>
                       ) : (
                         <Link
-                          href={item.btn_link || '#'}
+                          href={event.btn_link || '#'}
                           className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                         >
-                          {item.btn_text || 'Read More'}
+                          {event.btn_text || 'Read More'}
                         </Link>
                       )}
                       {/* Secondary Button */}
-                      {item.has_btn2 === 1 &&
-                        (item.is_enquire2 === 0 ? (
+                      {event.has_btn2 === 1 &&
+                        (event.is_enquire2 === 0 ? (
                           <button
-                            onClick={openDrawer}
+                            onClick={() => openDrawer(event.title)}
                             className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                           >
-                            {item.btn2_text || 'Enquire Now'}
+                            {event.btn2_text || 'Enquire Now'}
                           </button>
                         ) : (
                           <Link
-                            href={item.btn2_link || '#'}
+                            href={event.btn2_link || '#'}
                             className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                           >
-                            {item.btn2_text || 'Read More'}
+                            {event.btn2_text || 'Read More'}
                           </Link>
                         ))}
                     </div>
@@ -427,15 +442,15 @@ export default function CorporateEventSection({
                   >
                     <div className='absolute -top-3 -left-3 w-[30%] h-[50%] border-t-[12px] border-l-[12px] border-yellow-800'></div>
                     <div className='relative z-10 shadow-lg overflow-hidden'>
-                      {item.images.length > 1 ? (
+                      {event.images.length > 1 ? (
                         <ImageSlider
-                          images={item.images}
+                          images={event.images}
                           className='w-full h-[240px] md:h-[480px] object-cover'
                         />
                       ) : (
                         <Image
-                          src={item.images[0]}
-                          alt={item.imageAlt}
+                          src={event.images[0]}
+                          alt={event.imageAlt}
                           width={1000}
                           height={600}
                           className='border-8 shadow-xl w-full h-[240px] md:h-[480px] object-cover'
@@ -471,11 +486,11 @@ export default function CorporateEventSection({
                   <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                     <img
                       src='/assets/img/logo.png'
-                      alt='koti logo'
+                      alt='gaj logo'
                       className='w-44 mx-auto'
                     />
                     <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                      Thank you for your interest in Koti Resorts. Please kindly
+                      Thank you for your interest in Gaj Retreats. Please kindly
                       provide us with details of your request using the form
                       below.
                     </p>

@@ -1,5 +1,13 @@
-import { Facebook, Instagram, MapPin, Phone, Mail } from 'lucide-react';
+'use client';
+
 import { useState } from 'react';
+import { Facebook, Instagram, MapPin, Phone, Mail } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import 'react-phone-input-2/lib/style.css';
+import { baseUrl } from '../utils/network';
+
+// Dynamically import PhoneInput to avoid SSR issues
+const PhoneInput = dynamic(() => import('react-phone-input-2'), { ssr: false });
 
 export default function ContactSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,6 +36,18 @@ export default function ContactSection() {
     }));
   };
 
+  // Handle phone input changes
+  const handlePhoneChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      phone: value,
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      phone: '',
+    }));
+  };
+
   // Simple form validation function
   const validateForm = () => {
     let formErrors = {};
@@ -35,7 +55,6 @@ export default function ContactSection() {
     if (!formData.email) formErrors.email = 'Email is required';
     if (!formData.phone) formErrors.phone = 'Phone number is required';
     if (!formData.message) formErrors.message = 'Message is required';
-
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
@@ -44,32 +63,56 @@ export default function ContactSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      setIsLoading(false);
+      return;
+    }
 
     setIsLoading(true);
     setErrorMessage('');
     setIsSubmitted(false);
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          submissionTime: new Date().toISOString(),
+          submissionTime: new Date().toLocaleString(),
           sheetName: 'Contact',
         }),
       });
 
-      if (response.ok) {
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Contact');
+      formDataPayload.append('section', 'General Contact');
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
+      setIsLoading(false);
+
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setFormData({ name: '', email: '', phone: '', message: '' }); // Clear form
       } else {
         setErrorMessage('Failed to submit. Please try again.');
       }
     } catch (error) {
+      console.error('Error submitting form data:', error.message);
       setErrorMessage('Something went wrong. Please try again.');
-    } finally {
       setIsLoading(false);
     }
   };
@@ -88,8 +131,8 @@ export default function ContactSection() {
 
         <div className='flex flex-col md:flex-row items-center justify-center space-x-4 mb-8 gap-10'>
           <div className='flex flex-col items-center justify-center space-x-4 mb-8'>
-            <div className='flex font-bold items-center space-x-2  border-b border-gray-200'>
-              Genaral Contact
+            <div className='flex font-bold items-center space-x-2 border-b border-gray-200'>
+              General Contact
             </div>
             <div className='flex items-center space-x-2'>
               <Phone className='text-gray-600' size={20} />
@@ -106,25 +149,6 @@ export default function ContactSection() {
               </span>
             </div>
           </div>
-          {/* <div className='flex flex-col items-center justify-center space-x-4 mb-8'>
-            <div className='flex font-bold items-center space-x-2  border-b border-gray-200'>
-              Reservations
-            </div>
-            <div className='flex items-center space-x-2'>
-              <Phone className='text-gray-600' size={20} />
-              <span className='text-gray-700'>
-                <a href='tel:+91 81469 93104'>+91 81469 93104</a>
-              </span>
-            </div>
-            <div className='flex items-center space-x-2'>
-              <Mail className='text-gray-600' size={20} />
-              <span className='text-gray-700'>
-                <a href='mailto:reservations.gajresort@radissonindividuals.com'>
-                  reservations.gajresort@radissonindividuals.com
-                </a>
-              </span>
-            </div>
-          </div> */}
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 md:p-6'>
           {/* Google Map */}
@@ -164,13 +188,34 @@ export default function ContactSection() {
 
               <div>
                 <label className='block text-gray-700'>Phone Number</label>
-                <input
-                  type='tel'
-                  name='phone'
+                <PhoneInput
+                  country={'in'}
                   value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  className='w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-800'
+                  onChange={handlePhoneChange}
+                  inputProps={{
+                    name: 'phone',
+                    required: true,
+                  }}
+                  containerStyle={{ marginTop: '0.25rem' }}
+                  inputStyle={{
+                    width: '100%',
+                    padding: '0.5rem 2.5rem 0.5rem 3rem',
+                    border: '1px solid #d1d5db',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '0.375rem',
+                    outline: 'none',
+                    height: '2.5rem',
+                    fontSize: '1rem',
+                  }}
+                  buttonStyle={{
+                    border: '1px solid #d1d5db',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '0.375rem 0 0 0.375rem',
+                  }}
+                  dropdownStyle={{
+                    border: '1px solid #d1d5db',
+                  }}
+                  specialLabel={false}
                 />
                 {errors.phone && (
                   <span className='text-red-500 text-sm'>{errors.phone}</span>

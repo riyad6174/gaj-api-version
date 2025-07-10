@@ -75,7 +75,7 @@ export default function WeddingEvents() {
         <meta charSet='UTF-8' />
         <meta
           name='keywords'
-          content='destination wedding Shimla, Koti Resort weddings, Himachal Pradesh wedding venues, wedding hotel Shimla, Radisson Individuals'
+          content='destination wedding Shimla, Gaj Retreat weddings, Himachal Pradesh wedding venues, wedding hotel Shimla, Radisson Individuals'
         />
 
         {/* Open Graph Tags */}
@@ -84,10 +84,10 @@ export default function WeddingEvents() {
         <meta property='og:image' content={seoData.image} />
         <meta
           property='og:url'
-          content='https://www.kotiresorts.com/wedding-events'
+          content='https://gajretreat.com/wedding-events'
         />
         <meta property='og:type' content='website' />
-        <meta property='og:site_name' content='Koti Resorts' />
+        <meta property='og:site_name' content='Gaj Retreats' />
 
         {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image' />

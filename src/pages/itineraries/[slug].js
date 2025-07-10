@@ -177,7 +177,7 @@ export default function SignatureItineraryDetail() {
   return (
     <>
       <Head>
-        <title>{itinerary.title} - Koti Resorts</title>
+        <title>{itinerary.title} - Gaj Retreats</title>
         <meta
           name='description'
           content={
@@ -202,7 +202,7 @@ export default function SignatureItineraryDetail() {
         />
         <meta
           property='og:url'
-          content={`https://www.kotiresorts.com/signature-itineraries/${itinerary.slug}`}
+          content={`https://gajretreat.com/signature-itineraries/${itinerary.slug}`}
         />
         <meta property='og:type' content='article' />
         <meta name='twitter:card' content='summary_large_image' />
@@ -292,11 +292,11 @@ export default function SignatureItineraryDetail() {
                 <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                   <img
                     src='/assets/img/logo.png'
-                    alt='Koti Resorts logo'
+                    alt='Gaj Retreats logo'
                     className='w-44 mx-auto'
                   />
                   <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                    Thank you for your interest in Koti Resorts. Please kindly
+                    Thank you for your interest in Gaj Retreats. Please kindly
                     provide us with details of your request using the form
                     below.
                   </p>

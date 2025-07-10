@@ -95,6 +95,7 @@ export default function WeddingSection({
   });
   const [weddingData, setWeddingData] = useState(initialData || []);
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [currentWeddingTitle, setCurrentWeddingTitle] = useState(''); // Track the wedding item title for section
 
   // Client-side fallback for dynamic updates
   useEffect(() => {
@@ -163,9 +164,11 @@ export default function WeddingSection({
       message: '',
       submissionTime: '',
     });
+    setCurrentWeddingTitle('');
   };
 
-  const openDrawer = () => {
+  const openDrawer = (weddingTitle) => {
+    setCurrentWeddingTitle(weddingTitle);
     setIsOpen(true);
   };
 
@@ -203,7 +206,8 @@ export default function WeddingSection({
     formData.submissionTime = new Date().toLocaleString();
 
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -211,16 +215,36 @@ export default function WeddingSection({
         body: JSON.stringify({ ...formData, sheetName: 'Weddings' }),
       });
 
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Weddings');
+      formDataPayload.append(
+        'section',
+        currentWeddingTitle || 'General Enquiry'
+      );
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
@@ -258,21 +282,11 @@ export default function WeddingSection({
               <span className='h-[2px] w-16 bg-gray-400'></span>
             </div>
           ) : (
-            <>
-              {/* <p className='mt-4 text-gray-600'>
-                Treat your guests to a comfortable stay in our rooms and suites,
-                curated experiences, and delightful dining for a celebration
-                they won’t forget. Whether you’re planning a small indoor
-                ceremony or a beautiful garden wedding, our expert team will
-                take care of every detail so you can focus on creating magical
-                memories that will last a lifetime.
-              </p> */}
-              <div className='mt-2 flex justify-center items-center'>
-                <span className='h-[2px] w-16 bg-gray-400'></span>
-                <span className='mx-2 text-gray-500 text-lg'>✿</span>
-                <span className='h-[2px] w-16 bg-gray-400'></span>
-              </div>
-            </>
+            <div className='mt-2 flex justify-center items-center'>
+              <span className='h-[2px] w-16 bg-gray-400'></span>
+              <span className='mx-2 text-gray-500 text-lg'>✿</span>
+              <span className='h-[2px] w-16 bg-gray-400'></span>
+            </div>
           )}
         </div>
 
@@ -314,7 +328,7 @@ export default function WeddingSection({
                       {/* Primary Button */}
                       {item.is_enquire === 0 ? (
                         <button
-                          onClick={openDrawer}
+                          onClick={() => openDrawer(item.title)}
                           className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                         >
                           {item.btn_text || 'Enquire Now'}
@@ -331,7 +345,7 @@ export default function WeddingSection({
                       {item.has_btn2 === 1 &&
                         (item.is_enquire2 === 0 ? (
                           <button
-                            onClick={openDrawer}
+                            onClick={() => openDrawer(item.title)}
                             className='px-8 py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs font-semibold hover:bg-[#9d5b07] hover:text-white transition'
                           >
                             {item.btn2_text || 'Enquire Now'}
@@ -393,11 +407,11 @@ export default function WeddingSection({
                   <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                     <img
                       src='/assets/img/logo.png'
-                      alt='koti logo'
+                      alt='gaj logo'
                       className='w-44 mx-auto'
                     />
                     <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
-                      Thank you for your interest in Koti Resorts. Please kindly
+                      Thank you for your interest in Gaj Retreats. Please kindly
                       provide us with details of your request using the form
                       below.
                     </p>

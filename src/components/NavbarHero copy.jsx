@@ -20,7 +20,7 @@ export default function NavbarHero() {
             <div className='flex items-center justify-center w-40 h-18 md:w-40 md:h-20 lg:w-44 lg:h-20 overflow-hidden'>
               <Image
                 src='/assets/img/logo.jpg'
-                alt='Koti Resorts'
+                alt='Gaj Retreats'
                 width={1000}
                 height={1000}
                 className='cursor-pointer'

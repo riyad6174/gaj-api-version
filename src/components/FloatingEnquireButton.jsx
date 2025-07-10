@@ -9,8 +9,12 @@ import {
 } from '@headlessui/react';
 import { Fragment } from 'react';
 import Image from 'next/image';
-import PhoneInput from 'react-phone-input-2';
+import dynamic from 'next/dynamic';
 import 'react-phone-input-2/lib/style.css';
+import { baseUrl } from '../utils/network';
+
+// Dynamically import PhoneInput to avoid SSR issues
+const PhoneInput = dynamic(() => import('react-phone-input-2'), { ssr: false });
 
 function FloatingEnquireButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +23,7 @@ function FloatingEnquireButton() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '', // Will include country code (e.g., "+919876543210")
+    phone: '',
     message: '',
     submissionTime: '',
   });
@@ -42,6 +46,7 @@ function FloatingEnquireButton() {
       submissionTime: '',
     });
   };
+
   const openDrawer = () => {
     setIsOpen(true);
   };
@@ -53,13 +58,21 @@ function FloatingEnquireButton() {
       ...formData,
       [name]: value,
     });
+    setErrors({
+      ...errors,
+      [name]: '',
+    });
   };
 
   // Handle phone input change
   const handlePhoneChange = (value) => {
     setFormData({
       ...formData,
-      phone: value, // Value includes the country code (e.g., "+91")
+      phone: value,
+    });
+    setErrors({
+      ...errors,
+      phone: '',
     });
   };
 
@@ -74,17 +87,21 @@ function FloatingEnquireButton() {
     return Object.keys(formErrors).length === 0;
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    if (!validateForm()) {
+      setIsLoading(false);
+      return;
+    }
 
     setIsLoading(true);
     formData.submissionTime = new Date().toLocaleString();
 
-    console.log(formData); // Logs phone with country code (e.g., "+919876543210")
     try {
-      const response = await fetch('/api/submit', {
+      // First API call: Submit to spreadsheet
+      const spreadsheetResponse = await fetch('/api/submit', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -92,20 +109,39 @@ function FloatingEnquireButton() {
         body: JSON.stringify({ ...formData, sheetName: 'Home' }),
       });
 
+      // Second API call: Submit to /frontend/data/save-contact
+      const formDataPayload = new FormData();
+      formDataPayload.append('name', formData.name);
+      formDataPayload.append('phone', formData.phone);
+      formDataPayload.append('email', formData.email);
+      formDataPayload.append('message', formData.message);
+      formDataPayload.append('page', 'Home');
+      formDataPayload.append('section', 'Floating Enquiry');
+
+      const contactResponse = await fetch(
+        `${baseUrl}/frontend/data/save-contact`,
+        {
+          method: 'POST',
+          body: formDataPayload,
+        }
+      );
+
       setIsLoading(false);
 
-      if (response.ok) {
-        console.log('Form data submitted successfully!');
+      if (spreadsheetResponse.ok && contactResponse.ok) {
+        console.log('Form data submitted successfully to both APIs!');
         setIsSubmitted(true);
         setTimeout(() => {
           closeDrawer();
         }, 2000);
       } else {
-        console.error('Failed to submit form data.');
+        console.error('Failed to submit form data to one or both APIs.');
       }
     } catch (error) {
       setIsLoading(false);
-      console.error('Error submitting form data:', error);
+      console.error('Error submitting form data:', error.message);
+      console.error('API URL:', `${baseUrl}/frontend/data/save-contact`);
+      console.error('Error details:', error);
     }
   };
 
@@ -133,15 +169,15 @@ function FloatingEnquireButton() {
               leaveFrom='translate-x-0'
               leaveTo='translate-x-full'
             >
-              <DialogPanel className='w-full max-w-full  lg:max-w-md bg-gray-200 shadow-xl min-h-screen overflow-y-auto p-4 sm:p-6'>
-                <DialogTitle className='text-lg  font-bold text-gray-900 px-6 '>
+              <DialogPanel className='w-full max-w-full lg:max-w-md bg-gray-200 shadow-xl min-h-screen overflow-y-auto p-4 sm:p-6'>
+                <DialogTitle className='text-lg font-bold text-gray-900 px-6'>
                   <img
                     src='/assets/img/logo.png'
-                    alt='koti logo'
-                    className='w-44  mx-auto'
+                    alt='gaj logo'
+                    className='w-44 mx-auto'
                   />
-                  <p className='mt-2 text-gray-600 font-normal  md:text-sm text-[12px] text-center px-2 '>
-                    Thank you for your interest in Koti Resorts. Please kindly
+                  <p className='mt-2 text-gray-600 font-normal md:text-sm text-[12px] text-center px-2'>
+                    Thank you for your interest in Gaj Retreats. Please kindly
                     provide us with details of your request using the form
                     below.
                   </p>
@@ -159,7 +195,7 @@ function FloatingEnquireButton() {
                   >
                     {/* Name Field */}
                     <div>
-                      <label className='block text-gray-700 text-sm '>
+                      <label className='block text-gray-700 text-sm'>
                         Name
                       </label>
                       <input
@@ -168,7 +204,7 @@ function FloatingEnquireButton() {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className='w-full mt-1 px-3 py-1   border bg-white focus:outline-none focus:ring-2 focus:ring-yellow-800 text-sm sm:text-base'
+                        className='w-full mt-1 px-3 py-1 border bg-white focus:outline-none focus:ring-2 focus:ring-yellow-800 text-sm sm:text-base'
                       />
                       {errors.name && (
                         <span className='text-red-500 text-xs sm:text-sm'>
@@ -179,7 +215,7 @@ function FloatingEnquireButton() {
 
                     {/* Email Field */}
                     <div>
-                      <label className='block text-gray-700 text-sm '>
+                      <label className='block text-gray-700 text-sm'>
                         Email
                       </label>
                       <input
@@ -188,7 +224,7 @@ function FloatingEnquireButton() {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className='w-full mt-1 px-3 py-1   border bg-white focus:outline-none focus:ring-2 focus:ring-yellow-800 text-sm sm:text-base'
+                        className='w-full mt-1 px-3 py-1 border bg-white focus:outline-none focus:ring-2 focus:ring-yellow-800 text-sm sm:text-base'
                       />
                       {errors.email && (
                         <span className='text-red-500 text-xs sm:text-sm'>
@@ -199,7 +235,7 @@ function FloatingEnquireButton() {
 
                     {/* Phone Field */}
                     <div>
-                      <label className='block text-gray-700 text-sm '>
+                      <label className='block text-gray-700 text-sm'>
                         Phone
                       </label>
                       <PhoneInput
@@ -238,7 +274,7 @@ function FloatingEnquireButton() {
 
                     {/* Message Field */}
                     <div>
-                      <label className='block text-gray-700 text-sm '>
+                      <label className='block text-gray-700 text-sm'>
                         Message
                       </label>
                       <textarea
@@ -247,7 +283,7 @@ function FloatingEnquireButton() {
                         value={formData.message}
                         onChange={handleInputChange}
                         required
-                        className='w-full mt-1 px-3 py-1   border bg-white focus:outline-none focus:ring-2 focus:ring-yellow-800 text-sm sm:text-base'
+                        className='w-full mt-1 px-3 py-1 border bg-white focus:outline-none focus:ring-2 focus:ring-yellow-800 text-sm sm:text-base'
                       ></textarea>
                       {errors.message && (
                         <span className='text-red-500 text-xs sm:text-sm'>
@@ -260,14 +296,14 @@ function FloatingEnquireButton() {
                     <div className='space-y-2'>
                       <button
                         type='submit'
-                        className='w-full border border-gray-700 text-gray-800 py-1  hover:text-gray-100 hover:bg-yellow-800 transition text-sm sm:text-base'
+                        className='w-full border border-gray-700 text-gray-800 py-1 hover:text-gray-100 hover:bg-yellow-800 transition text-sm sm:text-base'
                       >
                         {isLoading ? 'Submitting...' : 'Submit'}
                       </button>
                       <button
                         type='button'
                         onClick={closeDrawer}
-                        className='w-full border border-red-700 text-red-800 py-1  hover:text-gray-100 hover:bg-yellow-800 transition text-sm sm:text-base'
+                        className='w-full border border-red-700 text-red-800 py-1 hover:text-gray-100 hover:bg-yellow-800 transition text-sm sm:text-base'
                       >
                         Close
                       </button>
