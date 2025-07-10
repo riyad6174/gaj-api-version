@@ -160,9 +160,7 @@ export default function OfferSection({
         {/* Section Heading */}
         <div className='text-center container'>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
-            {subTitles && subTitles[0]
-              ? subTitles[0]
-              : 'Dine among sprawling hills and verdant nature at Koti Resort Shimla, a member of Radisson Individuals Retreats'}
+            {subTitles && subTitles[0] ? subTitles[0] : ''}
           </h2>
           {/* <p className='mt-4 text-gray-600'>
             {descriptions && descriptions[0]

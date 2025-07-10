@@ -234,25 +234,23 @@ export default function WeddingSection({
         {/* Section Heading */}
         <div className='text-center container'>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
-            {subTitles && subTitles[0]
-              ? subTitles[0]
-              : 'Best Hotels for Destination Wedding in Shimla'}
+            {subTitles && subTitles[0] ? subTitles[0] : ''}
           </h2>
           <p className='mt-4 text-gray-600'>
-            {short_description && short_description
-              ? short_description
-              : 'Host an intimate Luxury Wedding Among the Sprawling Hills of Shimla'}
+            {short_description ? short_description : ''}
           </p>
-          <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[0]
-              ? stripHtml(descriptions[0])
-              : 'Host an intimate Luxury Wedding Among the Sprawling Hills of Shimla'}
-          </p>
-          <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[1]
-              ? stripHtml(descriptions[1])
-              : 'Nestled in the lush green nature of Shimla, Koti Resort Shimla, a member of Radisson Individuals Retreats, provides the perfect setting for an intimate celebration surrounded by close friends and family. Enjoy elegant indoor venues and outdoor spaces and take advantage of our personalized decorations, catering options, and floral arrangements to bring your dream wedding to life.'}
-          </p>
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[0] ? descriptions[0] : '',
+            }}
+          />
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[1] ? descriptions[1] : '',
+            }}
+          />
           {descriptions && descriptions[1] ? (
             <div className='mt-2 flex justify-center items-center'>
               <span className='h-[2px] w-16 bg-gray-400'></span>
@@ -261,14 +259,14 @@ export default function WeddingSection({
             </div>
           ) : (
             <>
-              <p className='mt-4 text-gray-600'>
+              {/* <p className='mt-4 text-gray-600'>
                 Treat your guests to a comfortable stay in our rooms and suites,
                 curated experiences, and delightful dining for a celebration
                 they won’t forget. Whether you’re planning a small indoor
                 ceremony or a beautiful garden wedding, our expert team will
                 take care of every detail so you can focus on creating magical
                 memories that will last a lifetime.
-              </p>
+              </p> */}
               <div className='mt-2 flex justify-center items-center'>
                 <span className='h-[2px] w-16 bg-gray-400'></span>
                 <span className='mx-2 text-gray-500 text-lg'>✿</span>

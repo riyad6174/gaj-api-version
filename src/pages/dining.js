@@ -44,14 +44,10 @@ export default function Dinning() {
         const result = await response.json();
         if (result.success && result.data) {
           setSeoData({
-            meta_title:
-              result.data.meta_title ||
-              'Dining | Koti Resort Shimla, a member of Radisson Individuals Retreats',
-            meta_description:
-              result.data.meta_description ||
-              'Enjoy local cuisine, refreshing drinks, and stunning mountain views at our restaurant and bar at Koti Resort Shimla, a member of Radisson Individuals.',
+            meta_title: result.data.meta_title || '',
+            meta_description: result.data.meta_description || '',
             image: result.data.image_path,
-            title: result.data.title || 'Dining',
+            title: result.data.title || '',
             sub_titles: result.data.sub_title || ['title1', 'title2'],
             descriptions: result.data.description || [
               'description1',
@@ -81,7 +77,7 @@ export default function Dinning() {
         <meta charSet='UTF-8' />
         <meta
           name='keywords'
-          content='dining Shimla, Koti Resort restaurant, Himachal Pradesh cuisine, Radisson Individuals, mountain view dining'
+          content=' Himachal Pradesh cuisine, Radisson Individuals, mountain view dining'
         />
 
         {/* Open Graph Tags */}

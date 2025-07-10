@@ -80,9 +80,10 @@ export default function EventsDiningSection({ sections }) {
                 <h2 className='text-2xl md:text-3xl font-semibold text-green-900'>
                   {section.title}
                 </h2>
-                <p className='mt-4 text-gray-700'>
-                  {stripHtml(section.description)}
-                </p>
+                <div
+                  className='mt-4 text-gray-600 '
+                  dangerouslySetInnerHTML={{ __html: section.description }}
+                />
                 <div className='mt-10 flex space-x-4'>
                   {/* Primary Button */}
                   {section.is_enquire === 0 ? (

@@ -44,14 +44,10 @@ export default function Explore() {
         const result = await response.json();
         if (result.success && result.data) {
           setSeoData({
-            meta_title:
-              result.data.meta_title ||
-              'Explore Koti Resorts Experiences | Swimming Pool, Forest Retreats & Radisson Shimla',
-            meta_description:
-              result.data.meta_description ||
-              'Experience luxury and serenity at Koti Resorts, a Radisson Retreat in Naldehra. Enjoy a swimming pool, forest resorts near Shimla, and exceptional hospitality.',
+            meta_title: result.data.meta_title,
+            meta_description: result.data.meta_description,
             image: result.data.image_path,
-            title: result.data.title || 'Explore',
+            title: result.data.title,
             sub_titles: result.data.sub_title || ['title1', 'title2'],
             descriptions: result.data.description || [
               'description1',
@@ -81,7 +77,7 @@ export default function Explore() {
         <meta charSet='UTF-8' />
         <meta
           name='keywords'
-          content='Koti Resorts experiences, swimming pool Shimla, forest retreats Naldehra, Radisson Shimla, luxury hospitality'
+          content=' swimming pool Shimla, forest retreats Naldehra, Radisson Shimla, luxury hospitality'
         />
 
         {/* Open Graph Tags */}

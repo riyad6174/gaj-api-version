@@ -241,9 +241,7 @@ export default function ExperienceSection({
         {/* Section Heading */}
         <div className='text-center '>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
-            {subTitles && subTitles[0]
-              ? subTitles[0]
-              : 'Luxury Accommodations in Himachal Pradesh'}
+            {subTitles && subTitles[0] ? subTitles[0] : ''}
           </h2>
           <div
             className='mt-4 text-gray-600'
@@ -259,7 +257,7 @@ export default function ExperienceSection({
         </div>
         <div className='text-center mt-4'>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
-            {subTitles && subTitles[1] ? subTitles[1] : 'Rooms'}
+            {subTitles && subTitles[1] ? subTitles[1] : ''}
           </h2>
           <div
             className='mt-4 text-gray-600'

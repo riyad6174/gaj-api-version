@@ -239,22 +239,35 @@ export default function CorporateEventSection({
         {/* Section Heading */}
         <div className='text-center container'>
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
-            {subTitles && subTitles[0]
-              ? subTitles[0]
-              : 'Hotels for Corporate Events & Business Meetings'}
+            {subTitles && subTitles[0] ? subTitles[0] : ''}
           </h2>
-          <p className='mt-4 text-gray-600'>
-            {descriptions && descriptions[0]
-              ? stripHtml(descriptions[0])
-              : 'Host memorable meetings and events at the Koti Resort Shimla, a member of Radisson Individuals Retreats. Situated among sprawling green hills, our resort provides a charming and inspiring setting for any occasion, from corporate meetings and conferences to social gatherings and grand celebrations. Featuring state-of-the-art facilities, a versatile venue, and a serene atmosphere, our meeting facilities offer the perfect balance of business and leisure.'}
-          </p>
-          {descriptions && descriptions[0] && (
-            <div className='mt-2 flex justify-center items-center'>
-              <span className='h-[2px] w-16 bg-gray-400'></span>
-              <span className='mx-2 text-gray-500 text-lg'>✿</span>
-              <span className='h-[2px] w-16 bg-gray-400'></span>
-            </div>
-          )}
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[0] ? descriptions[0] : '',
+            }}
+          />
+          <div className='mt-2 flex justify-center items-center'>
+            <span className='h-[2px] w-16 bg-gray-400'></span>
+            <span className='mx-2 text-gray-500 text-lg'>✿</span>
+            <span className='h-[2px] w-16 bg-gray-400'></span>
+          </div>
+        </div>
+        <div className='text-center container mt-4'>
+          <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
+            {subTitles && subTitles[1] ? subTitles[1] : ''}
+          </h2>
+          <div
+            className='mt-4 text-gray-600'
+            dangerouslySetInnerHTML={{
+              __html: descriptions && descriptions[1] ? descriptions[1] : '',
+            }}
+          />
+          {/* <p className='mt-4 text-gray-600'>
+            {descriptions && descriptions[1]
+              ? stripHtml(descriptions[1])
+              : 'All our rooms are coordinated in a way to make sure that you leave the noise at the door, retreating to the sanctuary that is the room. These sunlit havens come with independent balconies, and after a long day, you can draw the curtains, withdraw for a beat from the busyness of the world, and enjoy your cup of tea.'}
+          </p> */}
         </div>
         <div className='bg-slate-50 p-4 md:p-10 mt-14'>
           <div className='text-center'>
