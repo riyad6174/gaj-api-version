@@ -10,23 +10,21 @@ function Contact() {
   return (
     <div>
       <Head>
-        <title>
-          Contact | Gaj Resort, a member of Radisson Individuals Retreats
-        </title>
+        <title>Contact Gaj retreat Travel Developer & Support Contact</title>
         <meta
           name='description'
-          content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us. We look forward to hearing from you!'
+          content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us.'
         />
         <meta name='robots' content='index, follow' />
 
         {/* Open Graph Tags */}
         <meta
           property='og:title'
-          content='Contact | Gaj Resort, a member of Radisson Individuals Retreats'
+          content='Contact Gaj retreat Travel Developer & Support Contact'
         />
         <meta
           property='og:description'
-          content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us. We look forward to hearing from you!'
+          content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us.'
         />
         <meta property='og:image' content='/assets/img/slider.jpg' />
         <meta property='og:url' content='https://gajretreat.com/dining' />
@@ -36,11 +34,11 @@ function Contact() {
         <meta name='twitter:card' content='summary_large_image' />
         <meta
           name='twitter:title'
-          content='Contact | Gaj Resort, a member of Radisson Individuals Retreats'
+          content='Contact Gaj retreat Travel Developer & Support Contact'
         />
         <meta
           name='twitter:description'
-          content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us. We look forward to hearing from you!'
+          content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us.'
         />
         <meta name='twitter:image' content='/assets/img/slider.jpg' />
       </Head>

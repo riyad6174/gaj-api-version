@@ -8,21 +8,17 @@ export default function BlogSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Format created_at date for display
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
+  // Helper function to truncate text to 50 words
+  const truncateText = (text, charLimit) => {
+    if (text.length <= charLimit) return text;
+    return text.slice(0, charLimit) + '...';
   };
 
   // Fetch blogs from API
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(`${baseUrl}/blog`, {
+        const response = await fetch(`${baseUrl}/frontend/data/blog-list`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -39,7 +35,7 @@ export default function BlogSection() {
           throw new Error(result.message || 'Failed to retrieve blog list');
         }
 
-        setBlogs(result.data);
+        setBlogs(result.data.data); // Access nested data array
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -138,13 +134,13 @@ export default function BlogSection() {
             blogs.map((blog) => (
               <div
                 key={blog.id}
-                className='bg-white shadow-lg rounded-lg overflow-hidden flex flex-col h-[450px]' // Fixed height for card
+                className='bg-white shadow-lg rounded-lg overflow-hidden flex flex-col h-[450px]'
               >
                 {/* Image */}
                 <div className='w-full h-48 relative'>
                   <img
                     src={blog.image_path}
-                    alt={blog.title}
+                    alt={blog.image_alt_text}
                     className='object-cover w-full h-full'
                   />
                 </div>
@@ -155,12 +151,9 @@ export default function BlogSection() {
                   <h3 className='text-2xl font-semibold text-gray-800 line-clamp-2'>
                     {blog.title}
                   </h3>
-                  <p className='text-gray-600 text-sm mt-2'>
-                    {formatDate(blog.created_at)}
-                  </p>
                   {/* Short description with truncation */}
-                  <p className='text-gray-600 text-sm mt-4 line-clamp-2 flex-grow'>
-                    {blog.short_description}
+                  <p className='text-gray-600 text-sm mt-4 flex-grow'>
+                    {truncateText(blog.short_description, 170)}
                   </p>
                   {/* Button at bottom */}
                   <Link

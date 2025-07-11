@@ -24,7 +24,7 @@ export default function BlogDetail() {
       try {
         // Fetch blog details
         const blogResponse = await fetch(
-          `${baseUrl}/blog/data/show-by-slug/${slug}`,
+          `${baseUrl}/frontend/data/blog-details/${slug}`,
           {
             method: 'GET',
             headers: {
@@ -46,12 +46,16 @@ export default function BlogDetail() {
         setBlog(blogResult.data);
 
         // Fetch related blogs
-        const blogsResponse = await fetch(`${baseUrl}/blog`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const blogsResponse = await fetch(
+          `${baseUrl}/frontend/data/blog-list
+`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         if (!blogsResponse.ok) {
           throw new Error(
@@ -68,7 +72,7 @@ export default function BlogDetail() {
         }
 
         // Filter out the current blog from related blogs
-        setRelatedBlogs(blogsResult.data.filter((b) => b.slug !== slug));
+        setRelatedBlogs(blogsResult.data.data.filter((b) => b.slug !== slug));
         setLoading(false);
       } catch (err) {
         setError(err.message);
