@@ -177,7 +177,7 @@ export default function SignatureItineraryDetail() {
   return (
     <>
       <Head>
-        <title>{itinerary.title} - Gaj Retreats</title>
+        <title>{itinerary.meta_title}</title>
         <meta
           name='description'
           content={
