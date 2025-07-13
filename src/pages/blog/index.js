@@ -4,8 +4,8 @@ import BookingSection from '@/components/BookingSection';
 import Footer from '@/components/Footer';
 import NavbarHero from '@/components/NavbarHero';
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
 import { baseUrl } from '../../utils/network';
+import { useEffect, useState } from 'react';
 
 function blogs() {
   const [seoData, setSeoData] = useState({
