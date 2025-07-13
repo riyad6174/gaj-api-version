@@ -7,10 +7,11 @@ import NavbarHero from '@/components/NavbarHero';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { baseUrl } from '@/utils/network';
+import Head from 'next/head';
 
 export default function BlogDetail() {
   const router = useRouter();
-  const { slug } = router.query; // Get id from the URL
+  const { slug } = router.query; // Get slug from the URL
   const [blog, setBlog] = useState(null);
   const [relatedBlogs, setRelatedBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ export default function BlogDetail() {
 
   // Fetch blog details and related blogs
   useEffect(() => {
-    if (!slug) return; // Wait for id to be available
+    if (!slug) return; // Wait for slug to be available
 
     const fetchBlog = async () => {
       try {
@@ -47,8 +48,7 @@ export default function BlogDetail() {
 
         // Fetch related blogs
         const blogsResponse = await fetch(
-          `${baseUrl}/frontend/data/blog-list
-`,
+          `${baseUrl}/frontend/data/blog-list`,
           {
             method: 'GET',
             headers: {
@@ -92,7 +92,7 @@ export default function BlogDetail() {
           <div role='status'>
             <svg
               aria-hidden='true'
-              class='inline w-8 h-8 text-gray-200 animate-spin  fill-yellow-700'
+              className='inline w-8 h-8 text-gray-200 animate-spin fill-yellow-700'
               viewBox='0 0 100 101'
               fill='none'
               xmlns='http://www.w3.org/2000/svg'
@@ -106,7 +106,7 @@ export default function BlogDetail() {
                 fill='currentFill'
               />
             </svg>
-            <span class='sr-only'>Loading...</span>
+            <span className='sr-only'>Loading...</span>
           </div>
         </div>
         <Footer />
@@ -118,6 +118,32 @@ export default function BlogDetail() {
   if (error) {
     return (
       <>
+        <Head>
+          <title>Error | Gaj Retreat</title>
+          <meta
+            name='description'
+            content='An error occurred while fetching the blog post.'
+          />
+          <meta name='robots' content='noindex, nofollow' />
+          <meta property='og:title' content='Error | Gaj Retreat' />
+          <meta
+            property='og:description'
+            content='An error occurred while fetching the blog post.'
+          />
+          <meta property='og:image' content='/assets/img/slider.jpg' />
+          <meta
+            property='og:url'
+            content={`https://gajretreat.com/blog/${slug}`}
+          />
+          <meta property='og:type' content='website' />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:title' content='Error | Gaj Retreat' />
+          <meta
+            name='twitter:description'
+            content='An error occurred while fetching the blog post.'
+          />
+          <meta name='twitter:image' content='/assets/img/slider.jpg' />
+        </Head>
         <NavbarHero />
         <div className='container mx-auto py-30 text-center text-red-600'>
           Error: {error}
@@ -131,6 +157,32 @@ export default function BlogDetail() {
   if (!blog) {
     return (
       <>
+        <Head>
+          <title>Blog Not Found | Gaj Retreat</title>
+          <meta
+            name='description'
+            content='The requested blog post could not be found.'
+          />
+          <meta name='robots' content='noindex, nofollow' />
+          <meta property='og:title' content='Blog Not Found | Gaj Retreat' />
+          <meta
+            property='og:description'
+            content='The requested blog post could not be found.'
+          />
+          <meta property='og:image' content='/assets/img/slider.jpg' />
+          <meta
+            property='og:url'
+            content={`https://gajretreat.com/blog/${slug}`}
+          />
+          <meta property='og:type' content='website' />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:title' content='Blog Not Found | Gaj Retreat' />
+          <meta
+            name='twitter:description'
+            content='The requested blog post could not be found.'
+          />
+          <meta name='twitter:image' content='/assets/img/slider.jpg' />
+        </Head>
         <NavbarHero />
         <div className='container mx-auto py-30 text-center text-gray-600'>
           Blog not found.
@@ -152,6 +204,23 @@ export default function BlogDetail() {
 
   return (
     <>
+      <Head>
+        <title>{blog.meta_title}</title>
+        <meta name='description' content={blog.meta_description} />
+        <meta name='robots' content='index, follow' />
+        <meta property='og:title' content={blog.meta_title} />
+        <meta property='og:description' content={blog.meta_description} />
+        <meta property='og:image' content={blog.image_path} />
+        <meta
+          property='og:url'
+          content={`https://gajretreat.com/blog/${slug}`}
+        />
+        <meta property='og:type' content='article' />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:title' content={blog.meta_title} />
+        <meta name='twitter:description' content={blog.meta_description} />
+        <meta name='twitter:image' content={blog.image_path} />
+      </Head>
       <NavbarHero />
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 container py-30'>
         <section className='col-span-3 md:col-span-2'>
@@ -190,29 +259,34 @@ export default function BlogDetail() {
             {relatedBlogs.length === 0 ? (
               <p className='text-gray-600'>No related blogs available.</p>
             ) : (
-              relatedBlogs.map((relatedBlog) => (
-                <div key={relatedBlog.slug} className='mb-6'>
-                  <div className='flex items-center'>
-                    <Image
-                      src={relatedBlog.image_path}
-                      alt={relatedBlog.image_alt_text || relatedBlog.title}
-                      width={100}
-                      height={100}
-                      className='object-cover w-20 h-20 rounded-lg shadow-md'
-                    />
-                    <div className='ml-4'>
-                      <Link href={`/blog/${relatedBlog.slug}`}>
-                        <h4 className='text-lg font-semibold text-gray-800 hover:text-yellow-700 transition'>
-                          {relatedBlog.title}
-                        </h4>
-                      </Link>
-                      <p className='text-gray-600'>
-                        {formatDate(relatedBlog.created_at)}
-                      </p>
+              relatedBlogs.map((relatedBlog) => {
+                // Ensure relatedBlog has a created_at field before formatting
+                const formattedDate = relatedBlog.created_at
+                  ? formatDate(relatedBlog.created_at)
+                  : 'Date not available';
+
+                return (
+                  <div key={relatedBlog.slug} className='mb-6'>
+                    <div className='flex items-center'>
+                      <Image
+                        src={relatedBlog.image_path}
+                        alt={relatedBlog.image_alt_text || relatedBlog.title}
+                        width={100}
+                        height={100}
+                        className='object-cover w-20 h-20 rounded-lg shadow-md'
+                      />
+                      <div className='ml-4'>
+                        <Link href={`/blog/${relatedBlog.slug}`}>
+                          <h4 className='text-lg font-semibold text-gray-800 hover:text-yellow-700 transition'>
+                            {relatedBlog.title}
+                          </h4>
+                        </Link>
+                        <p className='text-gray-600'>{formattedDate}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </section>

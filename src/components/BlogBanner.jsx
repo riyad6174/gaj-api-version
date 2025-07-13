@@ -1,13 +1,15 @@
 import Image from 'next/image';
 
-export default function BlogBanner() {
+export default function AccommodationBanner({ title, bannerImage }) {
   return (
-    <section className='relative w-full h-[340px] md:h-[480px]  flex items-center'>
+    <section className='relative w-full h-[340px] md:h-[480px] flex items-center'>
+      {/* <div className='absolute inset-0 bg-black/60 z-10'></div> */}
+
       {/* Background Image */}
       <div className='absolute inset-0'>
         <Image
-          src='/assets/home/footer-banner.jpg'
-          alt='Accommodation'
+          src={bannerImage}
+          alt={title}
           layout='fill'
           objectFit='cover'
           quality={90}
@@ -18,8 +20,8 @@ export default function BlogBanner() {
 
       {/* Title Text */}
       <div className='container relative z-10 w-full px-6 md:px-20 lg:px-30 flex justify-end'>
-        <h1 className='text-3xl md:text-5xl font-bold text-white  border-r-8 border-white px-4 mt-20'>
-          Blog
+        <h1 className='text-3xl md:text-5xl font-bold text-white border-r-8 border-white px-4 mt-20'>
+          {title}
         </h1>
       </div>
     </section>

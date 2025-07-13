@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import DynamicBanner from '@/components/DynamicBanner';
@@ -5,6 +7,7 @@ import DynamicSection from '@/components/DynamicSection';
 import Footer from '@/components/Footer';
 import NavbarHero from '@/components/NavbarHero';
 import { baseUrl } from '@/utils/network';
+import Head from 'next/head';
 
 export default function DynamicPage() {
   const router = useRouter();
@@ -81,8 +84,42 @@ export default function DynamicPage() {
   if (loading) {
     return (
       <div className='min-h-screen flex flex-col'>
+        <Head>
+          <title>Loading | Gaj Retreat</title>
+          <meta
+            name='description'
+            content='Loading page content for Gaj Retreat.'
+          />
+          <meta name='robots' content='noindex, nofollow' />
+          <meta property='og:title' content='Loading | Gaj Retreat' />
+          <meta
+            property='og:description'
+            content='Loading page content for Gaj Retreat.'
+          />
+          <meta
+            property='og:image'
+            content='https://gaj.pritom.me/upload/file.png'
+          />
+          <meta
+            property='og:url'
+            content={`https://gajretreat.com/${
+              Array.isArray(slug) ? slug.join('/') : slug || ''
+            }`}
+          />
+          <meta property='og:type' content='website' />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:title' content='Loading | Gaj Retreat' />
+          <meta
+            name='twitter:description'
+            content='Loading page content for Gaj Retreat.'
+          />
+          <meta
+            name='twitter:image'
+            content='https://gaj.pritom.me/upload/file.png'
+          />
+        </Head>
         <NavbarHero />
-        <div className='flex-grow flex items-center justify-center '>
+        <div className='flex-grow flex items-center justify-center'>
           <div className='text-center h-screen'>
             <p className='text-lg font-semibold dark:text-white'>Loading...</p>
           </div>
@@ -95,8 +132,42 @@ export default function DynamicPage() {
   if (error || !pageData) {
     return (
       <div className='min-h-screen flex flex-col'>
+        <Head>
+          <title>Page Not Found | Gaj Retreat</title>
+          <meta
+            name='description'
+            content='The page you are looking for does not exist at Gaj Retreat.'
+          />
+          <meta name='robots' content='noindex, nofollow' />
+          <meta property='og:title' content='Page Not Found | Gaj Retreat' />
+          <meta
+            property='og:description'
+            content='The page you are looking for does not exist at Gaj Retreat.'
+          />
+          <meta
+            property='og:image'
+            content='https://gaj.pritom.me/upload/file.png'
+          />
+          <meta
+            property='og:url'
+            content={`https://gajretreat.com/${
+              Array.isArray(slug) ? slug.join('/') : slug || ''
+            }`}
+          />
+          <meta property='og:type' content='website' />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:title' content='Page Not Found | Gaj Retreat' />
+          <meta
+            name='twitter:description'
+            content='The page you are looking for does not exist at Gaj Retreat.'
+          />
+          <meta
+            name='twitter:image'
+            content='https://gaj.pritom.me/upload/file.png'
+          />
+        </Head>
         <NavbarHero />
-        <div className='flex-grow flex items-center justify-center bg-gray-800 '>
+        <div className='flex-grow flex items-center justify-center bg-gray-800'>
           <div className='text-center p-6'>
             <h1 className='text-3xl font-bold text-red-500 mb-4'>
               Page Not Found
@@ -119,6 +190,35 @@ export default function DynamicPage() {
 
   return (
     <div className='min-h-screen flex flex-col'>
+      <Head>
+        <title>{pageData.meta_title}</title>
+        <meta name='description' content={pageData.meta_description} />
+        <meta name='robots' content='index, follow' />
+        <meta property='og:title' content={pageData.meta_title} />
+        <meta property='og:description' content={pageData.meta_description} />
+        <meta
+          property='og:image'
+          content={
+            isChildPage ? pageData.image_path : pageData.banner_image_path
+          }
+        />
+        <meta
+          property='og:url'
+          content={`https://gajretreat.com/${
+            Array.isArray(slug) ? slug.join('/') : slug
+          }`}
+        />
+        <meta property='og:type' content='website' />
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:title' content={pageData.meta_title} />
+        <meta name='twitter:description' content={pageData.meta_description} />
+        <meta
+          name='twitter:image'
+          content={
+            isChildPage ? pageData.image_path : pageData.banner_image_path
+          }
+        />
+      </Head>
       <NavbarHero />
       <DynamicBanner
         bannerImg={

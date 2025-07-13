@@ -34,14 +34,32 @@ export default function TestimonialsGrid() {
           (a, b) => parseInt(b.priority) - parseInt(a.priority)
         );
 
-        const formattedTestimonials = sortedTestimonials.map((testimonial) => ({
-          name: testimonial.name,
-          context: testimonial.sub_title,
-          text: testimonial.description,
-          size: 'col-span-3 md:col-span-2',
-          rating: parseInt(testimonial.rate),
-          image: testimonial.image_path,
-        }));
+        const formattedTestimonials = sortedTestimonials.map(
+          (testimonial, index) => {
+            // Logic to assign sizes for alternating 2-card and 3-card rows
+            let size;
+            const rowIndex = Math.floor(index / 5); // Group by sets of 5 testimonials
+            if (rowIndex % 2 === 0) {
+              // 2-card row: both cards are md:col-span-2
+              size = 'col-span-3 md:col-span-1';
+            } else {
+              // 3-card row: first two are md:col-span-1, third is md:col-span-2, repeat
+              size =
+                index % 3 === 2
+                  ? 'col-span-3 md:col-span-2'
+                  : 'col-span-3 md:col-span-1';
+            }
+
+            return {
+              name: testimonial.name,
+              context: testimonial.sub_title,
+              text: testimonial.description,
+              size,
+              rating: parseInt(testimonial.rate),
+              image: testimonial.image_path,
+            };
+          }
+        );
 
         setTestimonials(formattedTestimonials);
       } catch (err) {
@@ -154,9 +172,10 @@ export default function TestimonialsGrid() {
                   <p className='text-sm font-semibold mb-3'>
                     {testimonial.context}
                   </p>
-                  <div className='text-gray-600 text-sm max-h-40 overflow-y-auto'>
-                    {testimonial.text}
-                  </div>
+                  <div
+                    className='text-gray-600 text-sm max-h-40 overflow-y-auto'
+                    dangerouslySetInnerHTML={{ __html: testimonial.text }}
+                  />
                 </div>
               ))}
             </div>
