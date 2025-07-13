@@ -52,7 +52,7 @@ export default function TestimonialsGrid() {
 
             return {
               name: testimonial.name,
-              context: testimonial.sub_title,
+              context: testimonial.title,
               text: testimonial.description,
               size,
               rating: parseInt(testimonial.rate),
