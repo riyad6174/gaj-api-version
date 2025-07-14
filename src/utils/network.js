@@ -1,1 +1,1 @@
-export const baseUrl = 'https://gaj.pritom.me/api/v1';
+export const baseUrl = 'https://www.api.gajretreat.com/api/v1';
