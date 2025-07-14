@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['gaj.pritom.me'],
+    domains: ['api.gajretreat.com', 'www.api.gajretreat.com'],
   },
 };
 
