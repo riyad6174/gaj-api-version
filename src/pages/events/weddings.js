@@ -84,7 +84,7 @@ export default function WeddingEvents() {
         <meta property='og:image' content={seoData.image} />
         <meta
           property='og:url'
-          content='https://gajretreat.com/wedding-events'
+          content='https://www.gajretreat.com/events/weddings'
         />
         <meta property='og:type' content='website' />
         <meta property='og:site_name' content='Gaj Retreats' />

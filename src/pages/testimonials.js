@@ -112,7 +112,10 @@ export default function TestimonialsGrid() {
         <meta property='og:title' content={seoData.metaTitle} />
         <meta property='og:description' content={seoData.metaDescription} />
         <meta property='og:image' content='/assets/img/slider.jpg' />
-        <meta property='og:url' content='https://gajretreat.com/dining' />
+        <meta
+          property='og:url'
+          content='https://www.gajretreat.com/testimonials'
+        />
         <meta property='og:type' content='website' />
         <meta name='twitter:card' content='summary_large_image' />
         <meta name='twitter:title' content={seoData.metaTitle} />

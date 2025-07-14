@@ -1,0 +1,4 @@
+User-agent: 
+Disallow:
+Allow: 
+sitemap: https://kotiresorts.com/sitemap.xml

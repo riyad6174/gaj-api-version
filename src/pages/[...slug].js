@@ -102,7 +102,7 @@ export default function DynamicPage() {
           />
           <meta
             property='og:url'
-            content={`https://gajretreat.com/${
+            content={`https://www.gajretreat.com/${
               Array.isArray(slug) ? slug.join('/') : slug || ''
             }`}
           />
@@ -150,7 +150,7 @@ export default function DynamicPage() {
           />
           <meta
             property='og:url'
-            content={`https://gajretreat.com/${
+            content={`https://www.gajretreat.com/${
               Array.isArray(slug) ? slug.join('/') : slug || ''
             }`}
           />
@@ -204,7 +204,7 @@ export default function DynamicPage() {
         />
         <meta
           property='og:url'
-          content={`https://gajretreat.com/${
+          content={`https://www.gajretreat.com/${
             Array.isArray(slug) ? slug.join('/') : slug
           }`}
         />

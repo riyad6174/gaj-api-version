@@ -115,7 +115,7 @@ export default function BookingForm() {
     params.append('brandFirst', '');
 
     // Redirect to the URL
-    window.location.href = `${baseUrl}?${params.toString()}`;
+    window.open(`${baseUrl}?${params.toString()}`, '_blank');
   };
 
   return (
@@ -234,7 +234,7 @@ export default function BookingForm() {
                         </h4>
                         {/* Adults */}
                         <div className='flex items-center justify-between mt-2'>
-                          <span className='text-gray-700'>Nº of adults</span>
+                          <span className='text-gray-700'>No. of adults</span>
                           <div className='flex items-center'>
                             <button
                               onClick={() => handleAdultChange(index, -1)}
@@ -254,7 +254,7 @@ export default function BookingForm() {
                         {/* Children */}
                         <div className='flex items-center justify-between mt-2'>
                           <span className='text-gray-700'>
-                            Nº of children <br />
+                            No. of children <br />
                             (Up to 12 years old)
                           </span>
                           <div className='flex items-center'>
