@@ -25,7 +25,7 @@ function accommodation() {
           content=' Learn more about Gaj Retreat in Shimla, Himachal Pradesh.'
         />
         <meta property='og:image' content='/assets/img/slider.jpg' />
-        <meta property='og:url' content='https://gajretreat.com/dining' />
+        <meta property='og:url' content='https://www.gajretreat.com/about-us' />
         <meta property='og:type' content='website' />
 
         {/* Twitter Card Tags */}

@@ -68,7 +68,7 @@ function Dining() {
         <meta property='og:title' content={seoData.meta_title} />
         <meta property='og:description' content={seoData.meta_description} />
         <meta property='og:image' content={seoData.image} />
-        <meta property='og:url' content='https://gajretreat.com/dining' />
+        <meta property='og:url' content='https://www.gajretreat.com/offers' />
         <meta property='og:type' content='website' />
         <meta property='og:site_name' content='Gaj Retreats' />
 

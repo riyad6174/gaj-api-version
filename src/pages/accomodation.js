@@ -28,18 +28,12 @@ function Accommodation() {
         const result = await response.json();
         if (result.success && result.data) {
           setSeoData({
-            meta_title:
-              result.data.meta_title || 'Luxury Stay in Himachal Pradesh',
-            meta_description:
-              result.data.meta_description ||
-              'Enjoy a luxury stay at Gaj Retreats, Shimla, Himachal Pradesh. Relax in comfortable rooms with stunning views, perfect for getaways.',
+            meta_title: result.data.meta_title || '',
+            meta_description: result.data.meta_description || '',
             image: result.data.image_path,
-            title: result.data.title || 'Accommodations',
-            sub_titles: result.data.sub_title || ['title1', 'title2'],
-            descriptions: result.data.description || [
-              'description1',
-              'description2',
-            ],
+            title: result.data.title || '',
+            sub_titles: result.data.sub_title || [],
+            descriptions: result.data.description || [],
           });
         }
       } catch (error) {
@@ -69,7 +63,7 @@ function Accommodation() {
         <meta property='og:image' content={seoData.image} />
         <meta
           property='og:url'
-          content='https://gajretreat.com/accommodations'
+          content='https://www.gajretreat.com/accommodation'
         />
         <meta property='og:type' content='website' />
         <meta property='og:site_name' content='Gaj Retreats' />

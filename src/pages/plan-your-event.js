@@ -82,7 +82,7 @@ export default function CorporateEvents() {
         <meta property='og:image' content={seoData.image} />
         <meta
           property='og:url'
-          content='https://gajretreat.com/corporate-events'
+          content='https://www.gajretreat.com/plan-your-event'
         />
         <meta property='og:type' content='website' />
         <meta property='og:site_name' content='Gaj Retreats' />

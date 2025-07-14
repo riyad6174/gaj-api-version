@@ -27,7 +27,10 @@ function Contact() {
           content='For bookings, feedback, and inquiries regarding Gaj Resort, a member of Radisson Individuals Retreats, please do not hesitate to contact us.'
         />
         <meta property='og:image' content='/assets/img/slider.jpg' />
-        <meta property='og:url' content='https://gajretreat.com/dining' />
+        <meta
+          property='og:url'
+          content='https://www.gajretreat.com/contact-us'
+        />
         <meta property='og:type' content='website' />
 
         {/* Twitter Card Tags */}

@@ -133,7 +133,7 @@ export default function BlogDetail() {
           <meta property='og:image' content='/assets/img/slider.jpg' />
           <meta
             property='og:url'
-            content={`https://gajretreat.com/blog/${slug}`}
+            content={`https://www.gajretreat.com/blog/${slug}`}
           />
           <meta property='og:type' content='website' />
           <meta name='twitter:card' content='summary_large_image' />
@@ -172,7 +172,7 @@ export default function BlogDetail() {
           <meta property='og:image' content='/assets/img/slider.jpg' />
           <meta
             property='og:url'
-            content={`https://gajretreat.com/blog/${slug}`}
+            content={`https://www.gajretreat.com/blog/${slug}`}
           />
           <meta property='og:type' content='website' />
           <meta name='twitter:card' content='summary_large_image' />
@@ -213,7 +213,7 @@ export default function BlogDetail() {
         <meta property='og:image' content={blog.image_path} />
         <meta
           property='og:url'
-          content={`https://gajretreat.com/blog/${slug}`}
+          content={`https://www.gajretreat.com/blog/${slug}`}
         />
         <meta property='og:type' content='article' />
         <meta name='twitter:card' content='summary_large_image' />

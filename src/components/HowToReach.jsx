@@ -37,7 +37,7 @@ export default function HowToReach() {
             </h3>
           </div>
           <span className='mt-2 text-gray-600'>
-            <span className='font-semibold mr-1'> By car/taxi:</span>, The
+            <span className='font-semibold mr-1'> By car/taxi:</span> The
             journey from the airport is 118 kilometers long and takes
             approximately 2.5 hours, depending on traffic.
           </span>
@@ -59,7 +59,7 @@ export default function HowToReach() {
             </h3>
           </div>
           <span className='mt-2 text-gray-600'>
-            <span className='font-semibold mr-1'> By car/taxi:</span>, The
+            <span className='font-semibold mr-1'> By car/taxi:</span> The
             journey from the Garshanker bus stand takes approximately 35 minutes
             and is 19 kilometers long.
           </span>
@@ -80,7 +80,7 @@ export default function HowToReach() {
             </h3>
           </div>
           <span className='mt-2 text-gray-600'>
-            <span className='font-semibold mr-1'> By car/taxi:</span>, The
+            <span className='font-semibold mr-1'> By car/taxi:</span> The
             journey from the train station is approximately 31 kilometers long
             and takes 50 minutes, depending on traffic.
           </span>

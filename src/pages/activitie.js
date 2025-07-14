@@ -84,7 +84,10 @@ export default function Explore() {
         <meta property='og:title' content={seoData.meta_title} />
         <meta property='og:description' content={seoData.meta_description} />
         <meta property='og:image' content={seoData.image} />
-        <meta property='og:url' content='https://gajretreat.com/explore' />
+        <meta
+          property='og:url'
+          content='https://www.gajretreat.com/activitie'
+        />
         <meta property='og:type' content='website' />
         <meta property='og:site_name' content='Gaj Retreats' />
 

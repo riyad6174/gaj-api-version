@@ -202,7 +202,7 @@ export default function SignatureItineraryDetail() {
         />
         <meta
           property='og:url'
-          content={`https://gajretreat.com/signature-itineraries/${itinerary.slug}`}
+          content={`https://www.gajretreat.com/signature-itineraries/${itinerary.slug}`}
         />
         <meta property='og:type' content='article' />
         <meta name='twitter:card' content='summary_large_image' />

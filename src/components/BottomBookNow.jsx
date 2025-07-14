@@ -96,7 +96,8 @@ function BookingDialog({ isOpen, onClose }) {
     params.append('brands', '');
     params.append('brandFirst', '');
 
-    window.location.href = `${baseUrl}?${params.toString()}#searchbar`;
+    // window.location.href = `${baseUrl}?${params.toString()}#searchbar`;
+    window.open(`${baseUrl}?${params.toString()}#searchbar`, '_blank');
   };
 
   if (!isOpen) return null;
