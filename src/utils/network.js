@@ -1,1 +1,1 @@
-export const baseUrl = 'https://api.gajretreat.com/api/v1';
+export const baseUrl = 'https://www.api.gajretreat.com/api/v1';
