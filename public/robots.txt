@@ -1,4 +1,4 @@
 User-agent: 
 Disallow:
 Allow: 
-sitemap: https://kotiresorts.com/sitemap.xml
+sitemap: https://www.gajretreat.com/sitemap.xml
