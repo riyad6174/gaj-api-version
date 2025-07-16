@@ -99,7 +99,7 @@ export default function NavbarHero() {
                   </div>
                 </Link>
               </div>
-              <ul className='flex space-x-4 text-[12px] xl:text-[16px] text-gray-100 font-medium whitespace-nowrap'>
+              <ul className='flex space-x-4 text-[12px] md:text-[12px] lg:text-[14px] xl:text-[15px] 2xl:text-[16px] text-gray-100 font-medium whitespace-nowrap'>
                 {navLinks.map((link, index) => (
                   <li key={index}>
                     <Link
@@ -119,7 +119,7 @@ export default function NavbarHero() {
               <a
                 target='_blank'
                 href={bookingUrl}
-                className='text-[11px] font-light bg-white text-[#553f26] px-8 py-3 hover:bg-yellow-800 hover:text-white transition min-w-[120px] text-center'
+                className='text-[11px] md:text-[10px] xl:text-[12px] font-light bg-white text-[#553f26] px-8 md:px-4 lg:px-8 py-3 hover:bg-yellow-800 hover:text-white transition min-w-[120px] text-center'
               >
                 BOOK NOW !
               </a>
