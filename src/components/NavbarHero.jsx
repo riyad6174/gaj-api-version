@@ -119,7 +119,7 @@ export default function NavbarHero() {
               <a
                 target='_blank'
                 href={bookingUrl}
-                className='text-[11px] font-light bg-white text-[#553f26] px-8 py-3 hover:bg-yellow-800 hover:text-white transition min-w-[120px] text-center'
+                className='text-[11px] font-light bg-white text-[#553f26] px-6 py-3 hover:bg-yellow-800 hover:text-white transition md:min-w-[100px] lg:min-w-[120px] text-center'
               >
                 BOOK NOW !
               </a>
