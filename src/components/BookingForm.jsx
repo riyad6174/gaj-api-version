@@ -119,7 +119,7 @@ export default function BookingForm() {
   };
 
   return (
-    <div className='hidden md:block w-full md:max-w-5xl xl:max-w-6xl mx-auto p-4 absolute z-20 bottom-[-160px] md:bottom-[-50px]'>
+    <div className='hidden md:block w-full max-w-6xl mx-auto p-4 absolute z-20 bottom-[-160px] md:bottom-[-50px]'>
       <div className='bg-white shadow-lg rounded-lg flex flex-col md:flex-row items-center justify-between px-4 py-3 gap-4'>
         {/* Check-in */}
         <DatePicker
