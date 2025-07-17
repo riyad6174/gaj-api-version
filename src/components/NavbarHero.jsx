@@ -232,7 +232,7 @@ export default function NavbarHero() {
                   </div>
                 </Link>
               </div>
-              <ul className='flex space-x-4 text-[12px] xl:text-[15px] text-gray-100 font-medium whitespace-nowrap'>
+              <ul className='flex space-x-4 text-[12px] xl:text-[14px] text-gray-100 font-medium whitespace-nowrap'>
                 {navLinks.map((link, index) => (
                   <li key={index}>
                     <Link
@@ -251,7 +251,7 @@ export default function NavbarHero() {
               {/* Book Now Button */}
               <button
                 onClick={openDrawer}
-                className='text-[11px] font-light bg-white text-[#553f26] px-6 py-3 hover:bg-yellow-800 hover:text-white transition md:min-w-[100px] lg:min-w-[120px] text-center'
+                className='cursor-pointer text-[11px] font-light bg-white text-[#553f26] px-2 py-3 hover:bg-yellow-800 hover:text-white transition md:min-w-[90px] lg:min-w-[110px] text-center'
               >
                 ENQUIRE NOW !
               </button>
