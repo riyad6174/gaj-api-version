@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import 'react-phone-input-2/lib/style.css';
+import { baseUrl } from '@/utils/network';
 const PhoneInput = dynamic(() => import('react-phone-input-2'), { ssr: false });
 
 export default function NavbarHero() {
