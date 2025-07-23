@@ -8,7 +8,7 @@ export default function BookingSection() {
       <div className='absolute inset-0'>
         <Image
           src='/assets/home/footer-banner.jpg'
-          alt='Uday Palace Hotel'
+          alt='Gaj Retreats'
           layout='fill'
           objectFit='cover'
           quality={100}
