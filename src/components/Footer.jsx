@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Instagram, Facebook, Linkedin, ArrowUp, Youtube } from 'lucide-react';
 import Link from 'next/link';
 import BottomBookNow from './BottomBookNow';
+import UpdatedBookNowBottom from './UpdatedBookNowBottom';
 
 export default function Footer() {
   return (
@@ -157,7 +158,7 @@ export default function Footer() {
           <ArrowUp size={24} />
         </button>
 
-        <BottomBookNow />
+        <UpdatedBookNowBottom />
       </div>
     </footer>
   );
