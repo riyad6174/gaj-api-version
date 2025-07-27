@@ -25,7 +25,7 @@ export default function Footer() {
             {/* Social Icons */}
             <div className='flex justify-center md:justify-start space-x-4 mt-4'>
               <a
-                href='https://www.instagram.com/gajretreat'
+                href='https://www.instagram.com/gajresort'
                 className='hover:text-yellow-500 transition'
               >
                 <Instagram size={24} />
