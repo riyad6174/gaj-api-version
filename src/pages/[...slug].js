@@ -167,8 +167,8 @@ export default function DynamicPage() {
           />
         </Head>
         <NavbarHero />
-        <div className='flex-grow flex items-center justify-center bg-gray-800'>
-          <div className='text-center p-6'>
+        <div className='flex-grow flex items-center h-[600px] justify-center bg-gray-800'>
+          <div className='text-center mt-20 p-6'>
             <h1 className='text-3xl font-bold text-red-500 mb-4'>404</h1>
             <p className='text-lg text-gray-700 dark:text-gray-300 mb-6'>
               {error || 'The page you are looking for does not exist.'}
