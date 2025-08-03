@@ -336,10 +336,10 @@ export default function NavbarHero() {
                           <a
                             target='_blank'
                             href={bookingUrl}
-                            className='block text-center text-sm bg-[#553f26] text-white font-medium py-3 px-4 hover:bg-yellow-800 transition'
+                            className='block text-center text-sm bg-[#553f26] text-white font-medium py-3 px-6 hover:bg-yellow-800 transition'
                             onClick={() => setIsMobileMenuOpen(false)}
                           >
-                            BOOK NOW !
+                            BOOK
                           </a>
                         </li>
                       </ul>
