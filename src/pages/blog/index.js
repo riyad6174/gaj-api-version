@@ -119,7 +119,7 @@ export default function Blogs() {
             name='description'
             content='An error occurred while loading the blog page.'
           />
-          <meta name='robots' content='noindex, nofollow' />
+          <meta name='robots' content='index, follow' />
           <meta property='og:title' content='Error | Gaj Retreat' />
           <meta
             property='og:description'

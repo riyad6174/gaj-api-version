@@ -90,7 +90,7 @@ export default function DynamicPage() {
             name='description'
             content='Loading page content for Gaj Retreat.'
           />
-          <meta name='robots' content='noindex, nofollow' />
+          <meta name='robots' content='index, follow' />
           <meta property='og:title' content='Loading | Gaj Retreat' />
           <meta
             property='og:description'
