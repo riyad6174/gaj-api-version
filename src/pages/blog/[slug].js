@@ -124,7 +124,7 @@ export default function BlogDetail() {
             name='description'
             content='An error occurred while fetching the blog post.'
           />
-          <meta name='robots' content='noindex, nofollow' />
+          <meta name='robots' content='index, follow' />
           <meta property='og:title' content='Error | Gaj Retreat' />
           <meta
             property='og:description'
