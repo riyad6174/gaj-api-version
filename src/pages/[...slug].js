@@ -138,7 +138,7 @@ export default function DynamicPage() {
             name='description'
             content='The page you are looking for does not exist at Gaj Retreat.'
           />
-          <meta name='robots' content='noindex, nofollow' />
+          <meta name='robots' content='index, follow' />
           <meta property='og:title' content='Page Not Found | Gaj Retreat' />
           <meta
             property='og:description'
