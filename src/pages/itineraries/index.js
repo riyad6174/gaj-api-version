@@ -53,22 +53,22 @@ export default function SignatureItineraries() {
     <div>
       <Head>
         <title>
-          Signature Itineraries - Himalayan Adventures, Spiritual Journeys, and
-          British Raj Heritage
+          Signature Travel Itineraries at Gaj Retreat | Himalayan Adventures &
+          Cultural Journeys
         </title>
         <meta
           name='description'
-          content='Join us on signature itineraries featuring Himalayan Horse Safaris, British Raj nostalgia, spiritual journeys, and cultural tours. Visit ancient temples, heritage villages, and stunning landscapes for an unforgettable adventure.'
+          content='Embark on curated journeys with Gaj Retreat. Explore Himalayan Horse Safaris, British Raj heritage, spiritual retreats, and cultural tours. Tailored experiences await you.'
         />
         <meta name='robots' content='index, follow' />
         {/* Open Graph Tags */}
         <meta
           property='og:title'
-          content='Signature Itineraries - Himalayan Adventures, Spiritual Journeys, and British Raj Heritage'
+          content='Signature Travel Itineraries at Gaj Retreat | Himalayan Adventures & Cultural Journeys'
         />
         <meta
           property='og:description'
-          content='Join us on signature itineraries featuring Himalayan Horse Safaris, British Raj nostalgia, spiritual journeys, and cultural tours. Visit ancient temples, heritage villages, and stunning landscapes for an unforgettable adventure.'
+          content='Embark on curated journeys with Gaj Retreat. Explore Himalayan Horse Safaris, British Raj heritage, spiritual retreats, and cultural tours. Tailored experiences await you.'
         />
         <meta property='og:image' content='/assets/img/slider.jpg' />
         <meta
@@ -80,11 +80,11 @@ export default function SignatureItineraries() {
         <meta name='twitter:card' content='summary_large_image' />
         <meta
           name='twitter:title'
-          content='Signature Itineraries - Himalayan Adventures, Spiritual Journeys, and British Raj Heritage'
+          content='Signature Travel Itineraries at Gaj Retreat | Himalayan Adventures & Cultural Journeys'
         />
         <meta
           name='twitter:description'
-          content='Join us on signature itineraries featuring Himalayan Horse Safaris, British Raj nostalgia, spiritual journeys, and cultural tours. Visit ancient temples, heritage villages, and stunning landscapes for an unforgettable adventure.'
+          content='Embark on curated journeys with Gaj Retreat. Explore Himalayan Horse Safaris, British Raj heritage, spiritual retreats, and cultural tours. Tailored experiences await you.'
         />
         <meta name='twitter:image' content='/assets/img/slider.jpg' />
       </Head>
