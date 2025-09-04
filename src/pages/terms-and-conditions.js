@@ -2,19 +2,53 @@
 
 import Footer from '@/components/Footer';
 import NavbarHero from '@/components/NavbarHero';
+import Head from 'next/head';
 import React from 'react';
 
 export default function TermsAndConditions() {
   return (
     <>
+      <Head>
+        <title>Terms and Conditions-Gaj Retreat</title>
+        <meta
+          name='description'
+          content='Review the Terms and Conditions at Gaj Retreat, Punjab, including booking policies, cancellation terms, identity proof requirements, and more for a seamless experience.'
+        />
+        <meta name='robots' content='index, follow' />
+        {/* Open Graph Tags */}
+        <meta property='og:title' content='Terms and Conditions-Gaj Retreat' />
+        <meta
+          property='og:description'
+          content='Review the Terms and Conditions at Gaj Retreat, Punjab, including booking policies, cancellation terms, identity proof requirements, and more for a seamless experience.'
+        />
+        <meta property='og:image' content='/assets/img/slider.jpg' />
+        <meta
+          property='og:url'
+          content='https://www.gajretreat.com/terms-and-conditions'
+        />
+        <meta property='og:type' content='website' />
+        {/* Twitter Card Tags */}
+        <meta name='twitter:card' content='summary_large_image' />
+        <meta name='twitter:title' content='Terms and Conditions-Gaj Retreat' />
+        <meta
+          name='twitter:description'
+          content='Review the Terms and Conditions at Gaj Retreat, Punjab, including booking policies, cancellation terms, identity proof requirements, and more for a seamless experience.'
+        />
+
+        <meta name='twitter:image' content='/assets/img/slider.jpg' />
+        <link
+          rel='canonical'
+          href='https://www.gajretreat.com/terms-and-conditions'
+        />
+      </Head>
       <NavbarHero />
       <section className='py-30 bg-gray-50'>
         <div className='container mx-auto px-6 md:px-12 lg:px-20'>
           {/* Page Header */}
           <div className='text-center mb-10'>
-            <h2 className='text-3xl md:text-4xl font-bold text-gray-900'>
+            <h1 className='text-3xl md:text-4xl font-bold text-gray-900'>
               Terms and Conditions
-            </h2>
+            </h1>
             <div className='mt-2 flex justify-center items-center'>
               <span className='h-[2px] w-16 bg-gray-400'></span>
               <span className='mx-2 text-gray-500 text-lg'>✿</span>
