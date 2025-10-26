@@ -17,6 +17,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         {/* End Google Tag Manager */}
+
+        {/* Google Analytics (gtag.js) */}
+        <script
+          async
+          src='https://www.googletagmanager.com/gtag/js?id=AW-856027077'
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'AW-856027077');
+            `,
+          }}
+        />
+        {/* End Google Analytics */}
       </Head>
       <body className='antialiased'>
         {/* Google Tag Manager (noscript) */}
