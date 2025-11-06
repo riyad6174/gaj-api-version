@@ -2,7 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import DatePicker, { DateObject } from 'react-multi-date-picker';
-import { Calendar, ChevronDown, Minus, Percent, Plus } from 'lucide-react';
+import {
+  Calendar,
+  ChevronDown,
+  Minus,
+  Percent,
+  Plus,
+  User,
+  Loader,
+} from 'lucide-react';
 import { Listbox, ListboxButton, Transition } from '@headlessui/react';
 
 export default function BookingForm() {
@@ -15,7 +23,11 @@ export default function BookingForm() {
   const [checkOut, setCheckOut] = useState('Thu 24 Apr');
   const [rooms, setRooms] = useState([{ adults: 2, children: 0 }]);
   const [isGuestDropdownOpen, setIsGuestDropdownOpen] = useState(false);
-  const [specialRate] = useState('Lowest available rate');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [errors, setErrors] = useState({ name: '', email: '', phone: '' });
+  const [loading, setLoading] = useState(false);
 
   // Sync check-in and check-out display strings
   useEffect(() => {
@@ -87,10 +99,71 @@ export default function BookingForm() {
     }
   };
 
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+    if (!name.trim()) {
+      newErrors.name = 'Required';
+    }
+    if (!email.trim()) {
+      newErrors.email = 'Required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Invalid email';
+    }
+    if (!phone.trim()) {
+      newErrors.phone = 'Required';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle input changes to clear errors
+  const handleInputChange = (field, value) => {
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
+    if (field === 'name') setName(value);
+    if (field === 'email') setEmail(value);
+    if (field === 'phone') setPhone(value);
+  };
+
   // Handle form submission and redirect
-  const handleBook = () => {
+  const handleBook = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+
     const checkInFormatted = formatDateForURL(checkInDate);
     const checkOutFormatted = formatDateForURL(checkOutDate);
+    const roomsStr = `${totalRooms} room${
+      totalRooms > 1 ? 's' : ''
+    }, ${totalAdults} adults`;
+
+    // Save to Google Sheet
+    try {
+      await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          checkin: checkInFormatted,
+          checkout: checkOutFormatted,
+          rooms: roomsStr,
+          sheetName: 'BookingEngine',
+        }),
+      });
+    } catch (error) {
+      console.error('Error saving to sheet:', error);
+      // Still proceed with redirect even if sheet save fails
+    } finally {
+      setLoading(false);
+    }
 
     // Construct URL with booking details
     const baseUrl = 'https://www.radissonhotels.com/en-us/booking/room-display';
@@ -108,6 +181,11 @@ export default function BookingForm() {
       params.append(`aoc[]`, '');
     });
 
+    // Add contact info
+    params.append('name', name.trim());
+    params.append('email', email.trim());
+    params.append('phone', phone.trim());
+
     // Add additional parameters
     params.append('promotionCode', '');
     params.append('voucher', '');
@@ -121,6 +199,42 @@ export default function BookingForm() {
   return (
     <div className='hidden md:block w-full max-w-6xl mx-auto p-4 absolute z-20 bottom-[-160px] md:bottom-[-50px]'>
       <div className='bg-white shadow-lg rounded-lg flex flex-col md:flex-row items-center justify-between px-4 py-3 gap-4'>
+        <div className='flex flex-col rounded-md p-1 w-full md:w-56 gap-2'>
+          {/* <div className='flex items-center mb-1'>
+            <User className='w-4 h-4 mr-1 text-gray-600' />
+            <span className='text-sm text-gray-500'>Contact Info</span>
+          </div> */}
+          <div className='grid grid-cols-2 gap-1 text-xs'>
+            <input
+              type='text'
+              placeholder='Name'
+              value={name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              className={`p-1 border-b ${
+                errors.name ? 'border-red-500' : 'border-gray-300'
+              } col-span-2 text-gray-700 focus:outline-none focus:border-[#553f26]`}
+            />
+            <input
+              type='email'
+              placeholder='Email'
+              value={email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              className={`p-1 border-b ${
+                errors.email ? 'border-red-500' : 'border-gray-300'
+              } text-gray-700 focus:outline-none focus:border-[#553f26]`}
+            />
+            <input
+              type='tel'
+              placeholder='Phone'
+              value={phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              className={`p-1 border-b ${
+                errors.phone ? 'border-red-500' : 'border-gray-300'
+              } text-gray-700 focus:outline-none focus:border-[#553f26]`}
+            />
+          </div>
+        </div>
+        <div className='w-1 h-14 border-l border-gray-400'></div>
         {/* Check-in */}
         <DatePicker
           value={checkInDate}
@@ -297,25 +411,23 @@ export default function BookingForm() {
             )}
           </Listbox>
         </div>
-        <div className='w-1 h-14 border-l border-gray-400'></div>
-
-        {/* Special Rate */}
-        <div className='flex items-center rounded-md p-2 w-full md:w-56'>
-          <Percent className='w-5 h-5 mr-2 font- text-gray-600' />
-          <div className='flex flex-col items-start w-full'>
-            <span className='text-sm text-gray-500'>Special Rates</span>
-            <span className='text-md font-bold text-black'>
-              Lowest Available Rate
-            </span>
-          </div>
-        </div>
+        {/* Contact Info Form */}
 
         {/* Book Button */}
         <button
           onClick={handleBook}
-          className='bg-[#553f26] cursor-pointer text-white font-semibold py-2 px-6 rounded-full hover:bg-[#553f26] transition-colors w-full md:w-auto'
+          disabled={loading}
+          className='bg-[#553f26] cursor-pointer text-white font-semibold py-2 px-6 rounded-full hover:bg-[#553f26] transition-colors w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
         >
-          BOOK
+          {loading ? (
+            <>
+              <div>
+                <Loader className='w-4 h-4 animate-spin' />
+              </div>
+            </>
+          ) : (
+            'BOOK'
+          )}
         </button>
       </div>
     </div>
