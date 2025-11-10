@@ -211,14 +211,14 @@ export default function MobileBookingForm({ isModal = false }) {
       }`}
     >
       <div className={innerDivClassName}>
-        <div className='flex flex-col rounded-md p-1 w-full gap-2'>
-          <div className='grid grid-cols-1 gap-1 text-xs'>
+        <div className='flex flex-col rounded-md p-1 w-full gap-3'>
+          <div className='space-y-3'>
             <input
               type='text'
               placeholder='Name'
               value={name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className={`p-1 border-b col-span-1 text-gray-700 focus:outline-none focus:border-[#553f26] w-full ${
+              className={`w-full py-3 px-4 border-b text-base text-gray-700 focus:outline-none focus:border-[#553f26] focus:placeholder-transparent ${
                 errors.name ? 'border-red-500' : 'border-gray-300'
               }`}
             />
@@ -227,7 +227,7 @@ export default function MobileBookingForm({ isModal = false }) {
               placeholder='Email'
               value={email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className={`p-1 border-b text-gray-700 focus:outline-none focus:border-[#553f26] w-full ${
+              className={`w-full py-3 px-4 border-b text-base text-gray-700 focus:outline-none focus:border-[#553f26] focus:placeholder-transparent ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
             />
@@ -236,7 +236,7 @@ export default function MobileBookingForm({ isModal = false }) {
               placeholder='Phone'
               value={phone}
               onChange={(e) => handleInputChange('phone', e.target.value)}
-              className={`p-1 border-b text-gray-700 focus:outline-none focus:border-[#553f26] w-full ${
+              className={`w-full py-3 px-4 border-b text-base text-gray-700 focus:outline-none focus:border-[#553f26] focus:placeholder-transparent ${
                 errors.phone ? 'border-red-500' : 'border-gray-300'
               }`}
             />
@@ -255,13 +255,13 @@ export default function MobileBookingForm({ isModal = false }) {
           render={(value, openCalendar) => (
             <button
               onClick={openCalendar}
-              className='flex items-center justify-between rounded-md p-2 w-full cursor-pointer'
+              className='flex items-center justify-between rounded-md p-3 w-full cursor-pointer'
             >
               <div className='flex items-center'>
                 <Calendar className='w-5 h-5 mr-2 text-gray-600' />
                 <div className='flex flex-col ml-2 items-start'>
                   <span className='text-sm text-gray-500'>Check-in</span>
-                  <span className='font-bold'>{checkIn}</span>
+                  <span className='font-bold text-base'>{checkIn}</span>
                 </div>
               </div>
               <ChevronDown className='w-5 h-5 ml-2 text-gray-600' />
@@ -281,13 +281,13 @@ export default function MobileBookingForm({ isModal = false }) {
           render={(value, openCalendar) => (
             <button
               onClick={openCalendar}
-              className='flex items-center justify-between rounded-md p-2 w-full cursor-pointer'
+              className='flex items-center justify-between rounded-md p-3 w-full cursor-pointer'
             >
               <div className='flex items-center'>
                 <Calendar className='w-5 h-5 mr-2 text-gray-600' />
                 <div className='flex flex-col ml-2 items-start'>
                   <span className='text-sm text-gray-500'>Check-out</span>
-                  <span className='font-bold'>{checkOut}</span>
+                  <span className='font-bold text-base'>{checkOut}</span>
                 </div>
               </div>
               <ChevronDown className='w-5 h-5 ml-2 text-gray-600' />
@@ -303,7 +303,7 @@ export default function MobileBookingForm({ isModal = false }) {
               <>
                 <ListboxButton
                   onClick={() => setIsGuestDropdownOpen(!isGuestDropdownOpen)}
-                  className='flex items-center justify-between rounded-md p-2 w-full cursor-pointer text-gray-700'
+                  className='flex items-center justify-between rounded-md p-3 w-full cursor-pointer text-gray-700'
                 >
                   <div className='flex items-center'>
                     <span className='mr-2'>👤</span>
@@ -311,7 +311,7 @@ export default function MobileBookingForm({ isModal = false }) {
                       <span className='text-sm text-gray-500'>
                         Rooms & Guests
                       </span>
-                      <span className='font-bold'>{`${totalRooms} ${
+                      <span className='font-bold text-base'>{`${totalRooms} ${
                         totalRooms > 1 ? 'rooms' : 'room'
                       }, ${totalAdults} adults`}</span>
                     </div>
@@ -425,7 +425,7 @@ export default function MobileBookingForm({ isModal = false }) {
         <button
           onClick={handleBook}
           disabled={loading}
-          className='bg-[#553f26] cursor-pointer text-white font-semibold py-2 px-6 rounded-full hover:bg-[#553f26] transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2'
+          className='bg-[#553f26] cursor-pointer text-white font-semibold py-3 px-6 rounded-full hover:bg-[#553f26] transition-colors w-full disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4'
         >
           {loading ? (
             <>
