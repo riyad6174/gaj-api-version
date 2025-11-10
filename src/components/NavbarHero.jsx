@@ -17,10 +17,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import 'react-phone-input-2/lib/style.css';
 import { baseUrl } from '@/utils/network';
+import MobileBookingForm from './MobileBookingForm';
 const PhoneInput = dynamic(() => import('react-phone-input-2'), { ssr: false });
 
 export default function NavbarHero() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // For mobile menu (left)
+  const [isBookingOpen, setIsBookingOpen] = useState(false); // For booking modal
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -173,9 +175,6 @@ export default function NavbarHero() {
   };
 
   const { checkInDate, checkOutDate } = getBookingDates();
-
-  // Construct the booking URL with dynamic dates
-  const bookingUrl = `https://www.radissonhotels.com/en-us/booking/room-display?hotelCode=INPBHOSAAA&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adults%5B%5D=2&children%5B%5D=0&aoc%5B%5D=&searchType=lowest&promotionCode=&voucher=&brands=&brandFirst=`;
 
   // Navigation links
   const navLinks = [
@@ -333,14 +332,15 @@ export default function NavbarHero() {
                           </li>
                         ))}
                         <li className='p-6'>
-                          <a
-                            target='_blank'
-                            href={bookingUrl}
-                            className='block text-center text-sm bg-[#553f26] text-white font-medium py-3 px-6 hover:bg-yellow-800 transition'
-                            onClick={() => setIsMobileMenuOpen(false)}
+                          <button
+                            onClick={() => {
+                              setIsMobileMenuOpen(false);
+                              setIsBookingOpen(true);
+                            }}
+                            className='block text-center text-sm bg-[#553f26] text-white font-medium py-3 px-6 hover:bg-yellow-800 transition w-full'
                           >
                             BOOK
-                          </a>
+                          </button>
                         </li>
                       </ul>
                     </div>
@@ -348,6 +348,56 @@ export default function NavbarHero() {
                 </DialogPanel>
               </TransitionChild>
             </div>
+          </div>
+        </Dialog>
+      </Transition>
+
+      {/* Mobile Booking Modal (Bottom Sheet) */}
+      <Transition show={isBookingOpen} as={Fragment}>
+        <Dialog
+          as='div'
+          className='relative z-50'
+          onClose={() => setIsBookingOpen(false)}
+        >
+          <TransitionChild
+            as={Fragment}
+            enter='ease-out duration-300'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='ease-in duration-200'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
+          >
+            <div className='fixed inset-0 bg-black/80' />
+          </TransitionChild>
+          <div className='fixed inset-0 flex items-end p-4'>
+            <TransitionChild
+              as={Fragment}
+              enter='ease-out duration-300 transform'
+              enterFrom='translate-y-full'
+              enterTo='translate-y-0'
+              leave='ease-in duration-200 transform'
+              leaveFrom='translate-y-0'
+              leaveTo='translate-y-full'
+            >
+              <DialogPanel className='w-full bg-white rounded-t-lg shadow-xl max-h-[90vh] overflow-hidden relative'>
+                <div className='flex justify-between items-center p-4 border-b'>
+                  <h2 className='text-lg font-semibold text-gray-900'>
+                    Book Now
+                  </h2>
+                  <button
+                    type='button'
+                    className='text-gray-400 hover:text-gray-600'
+                    onClick={() => setIsBookingOpen(false)}
+                  >
+                    <X className='w-6 h-6' />
+                  </button>
+                </div>
+                <div className='p-4 max-h-[calc(90vh-80px)] overflow-y-auto'>
+                  <MobileBookingForm isModal />
+                </div>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </Dialog>
       </Transition>
