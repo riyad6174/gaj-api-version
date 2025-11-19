@@ -12,6 +12,7 @@ import {
   Loader,
 } from 'lucide-react';
 import { Listbox, ListboxButton, Transition } from '@headlessui/react';
+import { baseUrl } from '@/utils/network';
 
 export default function BookingForm() {
   const today = new DateObject();
@@ -161,12 +162,33 @@ export default function BookingForm() {
     } catch (error) {
       console.error('Error saving to sheet:', error);
       // Still proceed with redirect even if sheet save fails
-    } finally {
-      setLoading(false);
     }
 
+    // Save to contact API
+    try {
+      const formData = new FormData();
+      formData.append('name', name.trim());
+      formData.append('email', email.trim());
+      formData.append('phone', phone.trim());
+      formData.append('checkIn', checkInFormatted);
+      formData.append('checkOut', checkOutFormatted);
+      formData.append('room', roomsStr);
+      formData.append('page', 'Home');
+      formData.append('section', 'booking');
+      await fetch(`${baseUrl}/frontend/data/save-contact`, {
+        method: 'POST',
+        body: formData,
+      });
+    } catch (error) {
+      console.error('Error saving to contact API:', error);
+      // Still proceed with redirect even if API save fails
+    }
+
+    setLoading(false);
+
     // Construct URL with booking details
-    const baseUrl = 'https://www.radissonhotels.com/en-us/booking/room-display';
+    const bookingBaseUrl =
+      'https://www.radissonhotels.com/en-us/booking/room-display';
     const params = new URLSearchParams({
       hotelCode: 'INPBHOSAAA',
       checkInDate: checkInFormatted,
@@ -193,7 +215,7 @@ export default function BookingForm() {
     params.append('brandFirst', '');
 
     // Redirect to the URL
-    window.open(`${baseUrl}?${params.toString()}`, '_blank');
+    window.open(`${bookingBaseUrl}?${params.toString()}`, '_blank');
   };
 
   return (
