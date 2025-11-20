@@ -10,6 +10,8 @@ import NavbarHero from '@/components/NavbarHero';
 import ServicesSection from '@/components/ServiceSection';
 import { baseUrl } from '@/utils/network';
 import Head from 'next/head';
+import Link from 'next/link';
+import { Dialog } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
@@ -23,6 +25,8 @@ export default function Home() {
     // sub_titles: ['title1', 'title2'],
     // descriptions: ['description1', 'description2'],
   });
+
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const fetchSeoData = async () => {
@@ -70,6 +74,7 @@ export default function Home() {
 
     fetchSeoData();
   }, []);
+
   return (
     <>
       <Head>
@@ -97,6 +102,40 @@ export default function Home() {
         <meta name='twitter:description' content={seoData.meta_description} />
         <meta name='twitter:image' content={seoData.image} />
       </Head>
+
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className='relative z-50'
+      >
+        <div className='fixed inset-0 bg-black/30' aria-hidden='true' />
+        <div className='fixed inset-0 flex items-center justify-center p-4'>
+          <Dialog.Panel className='relative max-w-none max-h-none transform overflow-hidden rounded-none transition-all'>
+            <Link
+              href='/offers'
+              className='block w-full h-full max-w-screen-md max-h-screen'
+            >
+              <img
+                src='/assets/offer/new-year.jpg'
+                alt='New Year Offer'
+                className='w-full h-full object-cover'
+              />
+            </Link>
+            <button
+              type='button'
+              className='absolute w-10 h-10 top-4 right-4 flex items-center justify-center text-white bg-black/50 hover:bg-black/70 rounded-full text-xl font-bold z-10'
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
+            >
+              ×
+            </button>
+          </Dialog.Panel>
+        </div>
+      </Dialog>
+
       <NavbarHero />
       <HeroSection />
       <About />
