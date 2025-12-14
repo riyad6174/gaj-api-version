@@ -198,7 +198,7 @@ export default function NavbarHero() {
             <Link href='/' className='flex items-center text-black lg:hidden'>
               <div className='flex items-center justify-center w-40 h-18 md:w-30 md:h-15 overflow-hidden'>
                 <Image
-                  src='/assets/img/footer.png'
+                  src='/assets/img/footer-1.png'
                   alt='Gaj Retreats'
                   width={1200}
                   height={1000}
@@ -222,7 +222,7 @@ export default function NavbarHero() {
                 <Link href='/' className='flex items-center text-black'>
                   <div className='w-44 h-20 overflow-hidden'>
                     <Image
-                      src='/assets/img/footer.png'
+                      src='/assets/img/footer-1.png'
                       alt='Gaj Retreats'
                       width={1200}
                       height={1000}

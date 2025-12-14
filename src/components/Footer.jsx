@@ -13,7 +13,7 @@ export default function Footer() {
           <div className='text-center md:text-left flex flex-col items-center md:items-center justify-center'>
             <div className='w-60 h-32 md:w-72 md:h-32  overflow-hidden'>
               <Image
-                src='/assets/img/footer.png'
+                src='/assets/img/footer-1.png'
                 alt='gaj Logo'
                 width={1000}
                 height={1000}
