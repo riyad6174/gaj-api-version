@@ -5,6 +5,7 @@ import BottomBookNow from './BottomBookNow';
 import UpdatedBookNowBottom from './UpdatedBookNowBottom';
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className='bg-black text-white py-10 relative'>
       <div className='container mx-auto px-6 md:px-0 lg:px-0'>
@@ -130,8 +131,8 @@ export default function Footer() {
 
         {/* Copyright Section */}
         <div className='mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-400'>
-          Copyright © 2025 Gaj Retreats. A MEMBER OF RADISSON INDIVIDUALS. All
-          rights reserved.
+          Copyright © {currentYear} Gaj Retreats. A MEMBER OF RADISSON
+          INDIVIDUALS. All rights reserved.
         </div>
         <Link
           href={'https://wa.me/message/SQ3IPGYUV7W6F1'}
