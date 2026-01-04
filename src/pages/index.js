@@ -26,7 +26,7 @@ export default function Home() {
     // descriptions: ['description1', 'description2'],
   });
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchSeoData = async () => {
