@@ -52,6 +52,10 @@ export default function BlogDetail() {
     'celebrate-new-year-2025-at-gaj-resort-a-member-of-radisson-individuals-retreats';
   const isSpecialSlug = slug === specialSlug;
 
+  const specialWeddingSlug =
+    'best-destination-wedding-resort-near-delhi-chandigarh-gaj-resort-punjab';
+  const isSpecialWeddingSlug = slug === specialWeddingSlug;
+
   // Fetch blog details and related blogs
   useEffect(() => {
     if (!slug) return; // Wait for slug to be available
@@ -390,6 +394,18 @@ export default function BlogDetail() {
               />
               <button
                 onClick={() => openDrawer("New Year's Eve Extravaganza")}
+                className='px-6 py-3 md:px-8 md:py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs md:text-sm font-semibold hover:bg-[#9d5b07] hover:text-white transition w-full md:w-auto max-w-xs'
+              >
+                Enquire Now
+              </button>
+            </div>
+          )}
+
+          {/* Enquire Now Button for Wedding Slug */}
+          {isSpecialWeddingSlug && (
+            <div className='mt-8 text-center px-4'>
+              <button
+                onClick={() => openDrawer('Destination Wedding Enquiry')}
                 className='px-6 py-3 md:px-8 md:py-3 border-2 border-[#9d5b07] text-[#9d5b07] text-xs md:text-sm font-semibold hover:bg-[#9d5b07] hover:text-white transition w-full md:w-auto max-w-xs'
               >
                 Enquire Now
