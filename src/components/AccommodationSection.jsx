@@ -18,7 +18,7 @@ import { baseUrl } from '../utils/network';
 export async function getStaticProps() {
   try {
     const res = await fetch(
-      `${baseUrl}/frontend/data/page-data-list/accommodations`
+      `${baseUrl}/frontend/data/page-data-list/accommodations`,
     );
     const result = await res.json();
 
@@ -105,12 +105,12 @@ export default function AccommodationSection({
                 btn2_text: room.btn2_text,
                 btn2_link: room.btn2_link,
                 is_enquire2: room.is_enquire2,
-              }))
+              })),
             );
           }
         })
         .catch((error) =>
-          console.error('Error fetching accommodation data:', error)
+          console.error('Error fetching accommodation data:', error),
         )
         .finally(() => setIsDataLoading(false));
     }
@@ -196,7 +196,7 @@ export default function AccommodationSection({
         {
           method: 'POST',
           body: formDataPayload,
-        }
+        },
       );
 
       setIsLoading(false);
@@ -259,70 +259,70 @@ export default function AccommodationSection({
           />
         </div>
         <div className='bg-slate-50 p-4 md:p-10 mt-14'>
-          <div className='text-center pb-8'>
+          <div className='text-center pb-8 '>
             <h2 className='text-2xl font-bold'>We are Unique</h2>
           </div>
-          <div className='text-center container grid grid-cols-2 md:grid-cols-4 gap-y-6 mt-4'>
+          <div className='text-center container  grid grid-cols-2 md:grid-cols-4 gap-y-6 mt-4'>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/166316/toiletries.svg'
-                alt='Toiletries'
+                src='/assets/room/icons/toiletries.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Toiletries</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/297186/television-tv.svg'
-                alt='DTH Television'
+                src='/assets/room/icons/television-tv.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>DTH Television</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/83698/car-parking.svg'
-                alt='On-site parking'
+                src='/assets/room/icons/car-parking.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>On-site parking</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/513070/wifi-1029.svg'
-                alt='Hi Speed WIFI'
+                src='/assets/room/icons/wifi-1029.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Hi Speed WIFI</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/404634/beverage-coffee-drink-machine-maker-shop.svg'
-                alt='Tea Coffee Maker'
+                src='/assets/room/icons/beverage-coffee-drink-machine-maker-shop.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Tea Coffee Maker</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/490859/mini-bar.svg'
-                alt='Mini Bar'
+                src='/assets/room/icons/mini-bar.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Mini Bar</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/493976/air-conditioner.svg'
-                alt='All season AC'
+                src='/assets/room/icons/air-conditioner.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>All season AC</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/429568/safebox-bank-locker-3.svg'
-                alt='E-Safes'
+                src='/assets/room/icons/safebox-bank-locker-3.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>E-Safes</span>

@@ -102,14 +102,14 @@ export default function DinningSection({
         .then((res) => {
           if (!res.ok) {
             throw new Error(
-              `HTTP error! Status: ${res.status}, StatusText: ${res.statusText}`
+              `HTTP error! Status: ${res.status}, StatusText: ${res.statusText}`,
             );
           }
           const contentType = res.headers.get('content-type');
           if (!contentType || !contentType.includes('application/json')) {
             return res.text().then((text) => {
               throw new Error(
-                `Expected JSON, but received: ${text.slice(0, 50)}...`
+                `Expected JSON, but received: ${text.slice(0, 50)}...`,
               );
             });
           }
@@ -133,7 +133,7 @@ export default function DinningSection({
                 btn2_text: item.btn2_text,
                 btn2_link: item.btn2_link,
                 is_enquire2: item.is_enquire2,
-              }))
+              })),
             );
           }
         })
@@ -141,7 +141,7 @@ export default function DinningSection({
           console.error('Error fetching dining data:', error.message);
           console.error(
             'API URL:',
-            `${baseUrl}/frontend/data/page-data-list/dining`
+            `${baseUrl}/frontend/data/page-data-list/dining`,
           );
           console.error('Error details:', error);
         })
@@ -220,7 +220,7 @@ export default function DinningSection({
       formDataPayload.append('page', 'Dining');
       formDataPayload.append(
         'section',
-        currentDiningTitle || 'General Enquiry'
+        currentDiningTitle || 'General Enquiry',
       );
 
       const contactResponse = await fetch(
@@ -228,7 +228,7 @@ export default function DinningSection({
         {
           method: 'POST',
           body: formDataPayload,
-        }
+        },
       );
 
       setIsLoading(false);
@@ -286,19 +286,19 @@ export default function DinningSection({
           <p className='text-center font-bold pb-10 text-3xl uppercase'>
             Key Features
           </p>
-          <div className='text-center container grid grid-cols-2 md:grid-cols-5 gap-y-6 mt-4'>
+          <div className='text-center container  grid grid-cols-2 md:grid-cols-5 gap-y-6 mt-4'>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251568/wine.svg'
-                alt='Bar on site'
+                src='/assets/dining/icons/wine.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Bar on site</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/297186/television-tv.svg'
-                alt='Credit cards accepted'
+                src='/assets/dining/icons/credit.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>
@@ -307,59 +307,62 @@ export default function DinningSection({
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251607/ice-cream.svg'
-                alt='Dessert served'
+                src='/assets/dining/icons/ice-cream.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Dessert served</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/513070/wifi-1029.svg'
-                alt='On-site parking'
+                src='/assets/dining/icons/wifi-1029.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>On-site parking</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251585/spaghetti.svg'
-                alt='Breakfast served'
+                src='/assets/dining/icons/spaghetti.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Breakfast served</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251611/chicken.svg'
-                alt='Dinner served'
+                src='/assets/dining/icons/chicken.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Dinner served</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251598/tray-plate.svg'
-                alt='Serves alcohol'
+                src='/assets/dining/icons/tray-plate.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Serves alcohol</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251583/catering-buffet.svg'
-                alt='Lunch Served'
+                src='/assets/dining/icons/catering-buffet.svg'
+                alt=''
                 className='w-10 h-10'
               />
-              <span className='text-md text-gray-600'>Lunch Served</span>
+              <span className='text-md text-gray-600'>Launch Served</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/380340/bench-park-outdoor-tree-seat.svg'
-                alt='Outdoor seating'
+                src='/assets/dining/icons/bench-park-outdoor-tree-seat.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Outdoor seating</span>
+              {/* <span className='text-xs text-gray-600'>
+                *Available in Premium, Suite and Deluxe rooms
+              </span> */}
             </div>
           </div>
         </div>

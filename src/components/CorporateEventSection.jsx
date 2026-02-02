@@ -20,7 +20,7 @@ import { baseUrl } from '../utils/network';
 export async function getStaticProps() {
   try {
     const res = await fetch(
-      `${baseUrl}/frontend/data/page-data-list/corporate-events`
+      `${baseUrl}/frontend/data/page-data-list/corporate-events`,
     );
     const contentType = res.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
@@ -58,7 +58,7 @@ export async function getStaticProps() {
   } catch (error) {
     console.error(
       'Error fetching corporate event data in getStaticProps:',
-      error
+      error,
     );
     return { props: { corporateData: [] } };
   }
@@ -110,14 +110,14 @@ export default function CorporateEventSection({
         .then((res) => {
           if (!res.ok) {
             throw new Error(
-              `HTTP error! Status: ${res.status}, StatusText: ${res.statusText}`
+              `HTTP error! Status: ${res.status}, StatusText: ${res.statusText}`,
             );
           }
           const contentType = res.headers.get('content-type');
           if (!contentType || !contentType.includes('application/json')) {
             return res.text().then((text) => {
               throw new Error(
-                `Expected JSON, but received: ${text.slice(0, 50)}...`
+                `Expected JSON, but received: ${text.slice(0, 50)}...`,
               );
             });
           }
@@ -142,7 +142,7 @@ export default function CorporateEventSection({
                 btn2_text: item.btn2_text,
                 btn2_link: item.btn2_link,
                 is_enquire2: item.is_enquire2,
-              }))
+              })),
             );
           }
         })
@@ -150,7 +150,7 @@ export default function CorporateEventSection({
           console.error('Error fetching corporate event data:', error.message);
           console.error(
             'API URL:',
-            `${baseUrl}/frontend/data/page-data-list/corporate-events`
+            `${baseUrl}/frontend/data/page-data-list/corporate-events`,
           );
           console.error('Error details:', error);
         })
@@ -234,7 +234,7 @@ export default function CorporateEventSection({
         {
           method: 'POST',
           body: formDataPayload,
-        }
+        },
       );
 
       setIsLoading(false);
@@ -286,30 +286,30 @@ export default function CorporateEventSection({
           />
         </div>
         <div className='bg-slate-50 p-4 md:p-10 mt-14'>
-          <div className='text-center'>
+          <div className='text-center '>
             <h3 className='text-2xl font-bold pb-10'>Key Features</h3>
           </div>
-          <div className='text-center container grid grid-cols-2 md:grid-cols-4 gap-y-6 mt-4'>
+          <div className='text-center container  grid grid-cols-2 md:grid-cols-4 gap-y-6 mt-4'>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/418776/meeting-presentation-training.svg'
-                alt='Meeting rooms'
+                src='/assets/event/icons/meeting-presentation-training.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Meeting rooms: 1</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/428835/audio-eq-media.svg'
-                alt='AV equipment'
+                src='/assets/event/icons/audio-eq-media.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>AV equipment</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/307750/dance-party-party-fun-entertain.svg'
-                alt='Dancefloor on request'
+                src='/assets/event/icons/dance-party-party-fun-entertain.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>
@@ -318,43 +318,44 @@ export default function CorporateEventSection({
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/513070/wifi-1029.svg'
-                alt='High-Speed WiFi'
+                src='/assets/event/icons/wifi-1029.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>High-Speed WiFi</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/499289/microphone.svg'
-                alt='Microphone'
+                src='/assets/event/icons/microphone.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Microphone</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/171235/stage.svg'
-                alt='Stage on request'
+                src='/assets/event/icons/stage.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Stage on request</span>
             </div>
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/251583/catering-buffet.svg'
-                alt='Catering service'
+                src='/assets/event/icons/catering-buffet.svg'
+                alt=''
                 className='w-10 h-10'
               />
               <span className='text-md text-gray-600'>Catering service</span>
             </div>
+
             <div className='flex flex-col items-center gap-3'>
               <img
-                src='https://www.svgrepo.com/show/140774/video-projector.svg'
-                alt='LED/LCD projector'
+                src='/assets/event/icons/video-projector.svg'
+                alt=''
                 className='w-10 h-10'
               />
-              <span className='text-md text-gray-600'>LED/LCD projector</span>
+              <span className='text-md text-gray-600'> LED/LCD projector</span>
             </div>
           </div>
         </div>
